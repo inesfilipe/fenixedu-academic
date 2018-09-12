@@ -39,29 +39,16 @@
 </div>
 
 <table class="table results">
-    <thead>
-    <th><spring:message code="label.interestRate.start" /></th>
-    <th><spring:message code="label.interestRate.end" /></th>
-    <th><spring:message code="label.interestRate.value"/></th>
-    </thead>
     <tbody>
         <tr>
             <td>
                 <spring:message code="label.firstCycle" />
             </td>
             <td>
-                <form:select path="firstCycleDegree">
-                    <form:option value="NONE" label="label.affinityCycles.chooseFirstCycle"/>
+                <form:select path="degreesFirstCycle">
                     <form:options items="${degreesFirstCycle}" />
                 </form:select>
             </td>
-            <td>
-                <c:out value="${interestRate.value} %"/>
-            </td>
-            <td>
-                <a href="${baseUrl}${interestRate.externalId}" class="btn btn-default"><spring:message code="label.edit"/></a>
-            </td>
         </tr>
-    </c:forEach>
     </tbody>
 </table>

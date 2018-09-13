@@ -1,4 +1,4 @@
-package org.fenixedu.academic.ui.spring.controller.manager;
+package org.fenixedu.academic.ui.spring.service;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DegreeCurricularPlansAffinityCyclesService {
+public class DegreeCurricularPlansCyclesAffinityService {
 
     public List<DegreeCurricularPlan> getAllFirstCycleDegrees() {
         return DegreeCurricularPlan.readByDegreeTypesAndState(
@@ -24,12 +24,12 @@ public class DegreeCurricularPlansAffinityCyclesService {
     }
 
     @Atomic
-    public void addDestinationAffinities(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
+    public void addDestinationAffinity(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
         firstCycleCourseGroup.addDestinationAffinities(secondCycleCourseGroup);
     }
 
     @Atomic
-    public void deleteDestinationAffinities(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
+    public void deleteDestinationAffinity(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
         firstCycleCourseGroup.getDestinationAffinitiesSet().remove(secondCycleCourseGroup);
     }
 }

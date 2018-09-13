@@ -24,9 +24,27 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<spring:url var="createUrl" value=""/>
-<spring:url var="baseUrl" value="/degree-affinity-manager/"/>
-<spring:url var="logsUrl" value="/degree-affinity-manager/logs"/>
+<script type='text/javascript'>
+
+    // $.fn.dataTableExt.afnFiltering.push(
+    // 	    function( oSettings, aData, iDataIndex ) {
+    // 	    	return true;
+    // 	    }
+    // 	);
+
+    $(document).ready(function() {
+        $("form#search select").change(function() {
+            $("form#search").submit();
+        });
+
+        $("button#search").click(function(el) {
+            $("form#search").attr('action', "${searchUrl}");
+        });
+    });
+
+</script>
+
+
 
 <div class="page-header">
 <h1>
@@ -34,21 +52,18 @@
     <small><spring:message code="label.listing" /></small>
 </h1>
 </div>
-<%--<section>
-    <form:form id="search" role="form" modelAttribute="search" method="GET" class="form-horizontal">
+<div class="btn-group">
+    <a class="btn btn-default" href="${logsUrl}"><spring:message code="label.show.logs"/></a>
+</div>
+<section>
+    <form:form id="firstCycle" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
         <div class="form-group">
-            <label for="selectDepartment" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.department" /></label>
+            <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="scientificCouncil.choose.firstCycle" /></label>
             <div class="col-sm-11">
-                <form:select path="department" id="selectDepartment" class="form-control">
-                    <form:option label="${i18n.message('label.all')}" value="null"/>
-                    <form:options items="${departments}" itemLabel="nameI18n.content" itemValue="externalId"/>
+                <form:select path="degreesFirstCycle" class="form-control">
+                    <%--<form:option label="${i18n.message('label.all')}" value="null"/>--%>
+                    <form:options items="${degreesFirstCycle}"/>
                 </form:select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="selectPeriod" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.period" /></label>
-            <div class="col-sm-11">
-                <form:select path="period" id="selectPeriod" items="${periods}" class="form-control" itemLabel="qualifiedName" itemValue="externalId"/>
             </div>
         </div>
         <div class="form-group">
@@ -58,12 +73,9 @@
         </div>
     </form:form>
 </section>
---%>
 
-<div class="btn-group">
-    <a class="btn btn-default" href="${logsUrl}"><spring:message code="label.show.logs"/></a>
-</div>
-
+<%--<hr />
+<div>
 <table class="table results">
     <tbody>
         <tr>
@@ -78,3 +90,4 @@
         </tr>
     </tbody>
 </table>
+</div>--%>

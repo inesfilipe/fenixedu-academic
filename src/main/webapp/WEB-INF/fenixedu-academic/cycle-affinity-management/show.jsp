@@ -46,6 +46,22 @@
 
 
 
+<script type='text/javascript'>
+
+    $(document).ready(function() {
+
+        $("form#firstCycleDegree select").change(function() {
+            $("form#firstCycleDegree").submit();
+        });
+
+        $("button#firstCycleDegree").click(function(el) {
+            $("form#firstCycleDegree").attr('action', "${searchUrl}");
+        });
+
+    });
+
+</script>
+
 <div class="page-header">
 <h1>
     <spring:message code="title.manage.degreeCurricularPlans.affinity"/>
@@ -56,38 +72,25 @@
     <a class="btn btn-default" href="${logsUrl}"><spring:message code="label.show.logs"/></a>
 </div>
 <section>
-    <form:form id="firstCycle" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
+    <form:form id="firstCycleDegree" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
         <div class="form-group">
-            <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="scientificCouncil.choose.firstCycle" /></label>
-            <div class="col-sm-11">
-                <form:select path="degreesFirstCycle" class="form-control">
-                    <%--<form:option label="${i18n.message('label.all')}" value="null"/>--%>
-                    <form:options items="${degreesFirstCycle}"/>
-                </form:select>
-            </div>
+            <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
+                <div class="col-sm-11">
+                    <form:select path="degreesFirstCycle" id="selectFirstCycle" items="${degreesFirstCycle}" class="form-control" itemLabel="presentationName" itemValue="externalId"/>
+                </div>
         </div>
         <div class="form-group">
             <div class="col-sm-push-1 col-sm-11">
-                <button type="submit" class="btn btn-default" id="search"><spring:message code="label.search" /></button>
+                <button type="submit" class="btn btn-default" id="firstCycleDegree"><spring:message code="label.search" /></button>
             </div>
         </div>
     </form:form>
 </section>
-
-<%--<hr />
-<div>
-<table class="table results">
-    <tbody>
-        <tr>
-            <td>
-                <spring:message code="label.firstCycle" />
-            </td>
-            <td>
-                <form:select path="degreesFirstCycle">
-                    <form:options items="${degreesFirstCycle}" />
-                </form:select>
-            </td>
-        </tr>
-    </tbody>
-</table>
-</div>--%>
+<hr />
+<section>
+    <h3>
+        <c:if test="${not empty firstCycleDegree}">
+            <spring:message code="teacher.professorships.subtitle.departments.single" arguments="${firstCycleDegree.presentationName};${firstCycleDegree.name}" argumentSeparator=";"/>
+        </c:if>
+    </h3>
+</section>

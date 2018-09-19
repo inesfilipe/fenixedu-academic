@@ -54,9 +54,9 @@
             $("form#firstCycleDegree").submit();
         });
 
-        $("button#firstCycleDegree").click(function(el) {
-            $("form#firstCycleDegree").attr('action', "${searchUrl}");
-        });
+        <%--$("button#search").click(function(el) {--%>
+            <%--$("form#search").attr('action', "${searchUrl}");--%>
+        <%--});--%>
 
     });
 
@@ -75,22 +75,30 @@
     <form:form id="firstCycleDegree" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
         <div class="form-group">
             <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
-                <div class="col-sm-11">
-                    <form:select path="degreesFirstCycle" id="selectFirstCycle" items="${degreesFirstCycle}" class="form-control" itemLabel="presentationName" itemValue="externalId"/>
-                </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-push-1 col-sm-11">
-                <button type="submit" class="btn btn-default" id="firstCycleDegree"><spring:message code="label.search" /></button>
+            <div class="col-sm-11">
+                <form:select path="degree" id="selectFirstCycle" items="${degreesFirstCycle}" class="form-control" itemLabel="presentationName" itemValue="externalId"/>
             </div>
         </div>
     </form:form>
 </section>
 <hr />
 <section>
-    <h3>
-        <c:if test="${not empty firstCycleDegree}">
-            <spring:message code="teacher.professorships.subtitle.departments.single" arguments="${firstCycleDegree.presentationName};${firstCycleDegree.name}" argumentSeparator=";"/>
-        </c:if>
-    </h3>
+    <h4>
+        <spring:message code="teacher.professorships.subtitle.departments.all" arguments="${firstCycleDegree.degree.presentationName}"/>
+    </h4>
+
+    <table class="table" id="affinities">
+        <thead>
+        <th><spring:message code="label.affinities"/></th>
+        <th></th>
+        </thead>
+        <tbody>
+        <c:forEach var="affinity" items="${affinities}">
+            <tr class="authorization" id="affinity-${affinity.externalId}">
+                <td><c:out value="${affinity.name} - ${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
+                <td><button class="btn btn-default"><spring:message code="label.delete"/></button></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </section>

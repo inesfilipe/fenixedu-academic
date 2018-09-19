@@ -4,6 +4,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
+import org.fenixedu.academic.ui.spring.controller.scientificCouncil.DegreeCurricularPlansCycleBean;
 import org.springframework.stereotype.Service;
 import pt.ist.fenixframework.Atomic;
 
@@ -16,11 +17,12 @@ public class DegreeCurricularPlansCyclesAffinityService {
     public List<DegreeCurricularPlan> getAllFirstCycleDegrees() {
         return DegreeCurricularPlan.readByDegreeTypesAndState(
                 DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree),
-                DegreeCurricularPlanState.ACTIVE);
+                DegreeCurricularPlanState.ACTIVE).stream().sorted(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME).collect(Collectors.toList());
     }
 
-    public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(DegreeCurricularPlan firstCycleDegree) {
-        return firstCycleDegree.getFirstCycleCourseGroup().getDestinationAffinitiesSet().stream().collect(Collectors.toList());
+    public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(final DegreeCurricularPlansCycleBean firstCycleDegree) {
+        return firstCycleDegree.getDegree().getFirstCycleCourseGroup().getDestinationAffinitiesSet().stream().
+                sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).collect(Collectors.toList());
     }
 
     @Atomic

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @SpringApplication(path = "degreeAffinityCycles", hint = "Manager", group = "#managers", title = "title.manage.degreeCurricularPlans.affinity")
 @SpringFunctionality(app = ManageDegreeCurricularPlansCyclesAffinityController.class, title = "title.manage.degreeCurricularPlans.affinity")
@@ -30,10 +32,16 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String listAllFirstCycle(Model model, @ModelAttribute DegreeCurricularPlan firstCycleDegree) {
-        model.addAttribute("firstCycleDegree", firstCycleDegree);
-        model.addAttribute("degreesFirstCycle", degreeCurricularPlansAffinityCyclesService.getAllFirstCycleDegrees());
-        model.addAttribute("afffinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithAffinity(firstCycleDegree));
+    public String listAllFirstCycle(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree) {
+                List<DegreeCurricularPlan> degreesFirstCycle = degreeCurricularPlansAffinityCyclesService.getAllFirstCycleDegrees();
+
+                if(firstCycleDegree.getDegree() == null) {
+                    firstCycleDegree.setDegree(degreesFirstCycle.get(0));
+                }
+
+                model.addAttribute("degreesFirstCycle", degreesFirstCycle);
+                model.addAttribute("firstCycleDegree", firstCycleDegree);
+                model.addAttribute("affinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithAffinity(firstCycleDegree));
         return view("show");
     }
 

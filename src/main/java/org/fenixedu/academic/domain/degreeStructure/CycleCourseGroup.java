@@ -18,13 +18,7 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -36,6 +30,17 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
+
+    public static final Comparator<CycleCourseGroup> COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME =
+            new Comparator<CycleCourseGroup>() {
+
+                @Override
+                public int compare(CycleCourseGroup o1, CycleCourseGroup o2) {
+                    return o1.getParentDegreeCurricularPlan().getPresentationName().
+                            compareTo(o2.getParentDegreeCurricularPlan().getPresentationName());
+                }
+
+            };
 
     protected CycleCourseGroup() {
         super();

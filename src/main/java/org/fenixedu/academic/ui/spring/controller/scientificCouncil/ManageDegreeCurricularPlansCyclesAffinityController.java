@@ -42,6 +42,7 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
                 model.addAttribute("degreesFirstCycle", degreesFirstCycle);
                 model.addAttribute("firstCycleDegree", firstCycleDegree);
                 model.addAttribute("affinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithAffinity(firstCycleDegree));
+                model.addAttribute("potentialAffinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithoutAffinity(firstCycleDegree));
         return view("show");
     }
 

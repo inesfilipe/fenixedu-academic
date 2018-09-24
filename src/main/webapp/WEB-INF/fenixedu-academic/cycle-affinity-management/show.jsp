@@ -95,8 +95,22 @@
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
             <tr class="authorization" id="affinity-${affinity.externalId}">
-                <td><c:out value="${affinity.name} - ${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
+                <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
                 <td><button class="btn btn-default"><spring:message code="label.delete"/></button></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <table class="table" id="potentialAffinities">
+        <thead>
+        <th><spring:message code="label.potential.affinities"/></th>
+        <th></th>
+        </thead>
+        <tbody>
+        <c:forEach var="potentialAffinity" items="${potentialAffinities}">
+            <tr class="authorization" id="affinity-${potentialAffinity.externalId}">
+                <td><c:out value="${potentialAffinity.parentDegreeCurricularPlan.presentationName}" /></td>
             </tr>
         </c:forEach>
         </tbody>

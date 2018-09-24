@@ -25,6 +25,14 @@ public class DegreeCurricularPlansCyclesAffinityService {
                 sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).collect(Collectors.toList());
     }
 
+    public List<CycleCourseGroup> getSecondCycleDegreesWithoutAffinity(final DegreeCurricularPlansCycleBean firstCycleDegree) {
+        List<CycleCourseGroup> affinities = getSecondCycleDegreesWithAffinity(firstCycleDegree);
+
+        return firstCycleDegree.getDegree().getFirstCycleCourseGroup().getAllPossibleAffinities().stream().
+                filter(c -> !affinities.contains(c)).sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).
+                collect(Collectors.toList());
+    }
+
     @Atomic
     public void addDestinationAffinity(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
         firstCycleCourseGroup.addDestinationAffinities(secondCycleCourseGroup);

@@ -75,13 +75,29 @@
     <form:form id="firstCycleDegree" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
         <div class="form-group">
             <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
-            <div class="col-sm-11">
+            <div class="col-sm-9">
                 <form:select path="degree" id="selectFirstCycle" items="${degreesFirstCycle}" class="form-control" itemLabel="presentationName" itemValue="externalId"/>
             </div>
         </div>
     </form:form>
 </section>
 <hr />
+<section>
+    <form:form id="newAffinity" role="form" modelAttribute="newAffinity" method="PUT" class="form-horizontal">
+        <div class="form-group">
+            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.potential.affinities"/></label>
+            <div class="col-sm-9">
+                <form:select path="secondCycleCourseGroup" id="addAffinity" items="${potentialAffinities}" class="form-control" itemLabel="parentDegreeCurricularPlan.presentationName" itemValue="externalId"/>
+            </div>
+            <button type="submit" class="btn btn-primary" id="newAffinity"><spring:message code="label.add" /></button>
+        </div>
+    </form:form>
+</section>
+
+
+<hr />
+
+
 <section>
     <h4>
         <spring:message code="teacher.professorships.subtitle.departments.all" arguments="${firstCycleDegree.degree.presentationName}"/>
@@ -94,23 +110,9 @@
         </thead>
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
-            <tr class="authorization" id="affinity-${affinity.externalId}">
+            <tr id="affinity-${affinity.externalId}">
                 <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
-                <td><button class="btn btn-default"><spring:message code="label.delete"/></button></td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-    <table class="table" id="potentialAffinities">
-        <thead>
-        <th><spring:message code="label.potential.affinities"/></th>
-        <th></th>
-        </thead>
-        <tbody>
-        <c:forEach var="potentialAffinity" items="${potentialAffinities}">
-            <tr class="authorization" id="affinity-${potentialAffinity.externalId}">
-                <td><c:out value="${potentialAffinity.parentDegreeCurricularPlan.presentationName}" /></td>
+                <td><button class="btn btn-danger"><spring:message code="label.delete"/></button></td>
             </tr>
         </c:forEach>
         </tbody>

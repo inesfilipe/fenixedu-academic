@@ -1,7 +1,10 @@
 package org.fenixedu.academic.ui.spring.controller.scientificCouncil;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.ui.spring.service.DegreeCurricularPlansCyclesAffinityService;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.spring.portal.SpringApplication;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +35,36 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String listAllFirstCycle(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree) {
-                List<DegreeCurricularPlan> degreesFirstCycle = degreeCurricularPlansAffinityCyclesService.getAllFirstCycleDegrees();
+    public String listAllFirstCycle(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @ModelAttribute CycleCourseGroupAffinityBean newAffinity) {
+        List<DegreeCurricularPlan> degreesFirstCycle = degreeCurricularPlansAffinityCyclesService.getAllFirstCycleDegrees();
 
-                if(firstCycleDegree.getDegree() == null) {
-                    firstCycleDegree.setDegree(degreesFirstCycle.get(0));
-                }
+        if(firstCycleDegree.getDegree() == null) {
+            firstCycleDegree.setDegree(degreesFirstCycle.get(0));
+        }
 
-                model.addAttribute("degreesFirstCycle", degreesFirstCycle);
-                model.addAttribute("firstCycleDegree", firstCycleDegree);
-                model.addAttribute("affinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithAffinity(firstCycleDegree));
-                model.addAttribute("potentialAffinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithoutAffinity(firstCycleDegree));
+        List<CycleCourseGroup> potentialAffinities = degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithoutAffinity(firstCycleDegree);
+
+        if(newAffinity.getSecondCycleCourseGroup() == null) {
+            newAffinity.setSecondCycleCourseGroup(potentialAffinities.get(0));
+        }
+
+        model.addAttribute("degreesFirstCycle", degreesFirstCycle);
+        model.addAttribute("firstCycleDegree", firstCycleDegree);
+        model.addAttribute("affinities", degreeCurricularPlansAffinityCyclesService.getSecondCycleDegreesWithAffinity(firstCycleDegree));
+        model.addAttribute("potentialAffinities", potentialAffinities);
+        model.addAttribute("newAffinity", newAffinity);
         return view("show");
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String addSecondCycleAffinity(Model model) {
-        return redirectHome();
+    public String addAffinity(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @ModelAttribute CycleCourseGroupAffinityBean newAffinity) {
+        try {
+            degreeCurricularPlansAffinityCyclesService.addDestinationAffinity(firstCycleDegree, newAffinity);
+            return redirectHome();
+        } catch (DomainException de) {
+            model.addAttribute("error", de.getLocalizedMessage());
+            return listAllFirstCycle(model, firstCycleDegree, newAffinity);
+        }
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

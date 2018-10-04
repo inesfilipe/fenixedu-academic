@@ -24,27 +24,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<script type='text/javascript'>
-
-    // $.fn.dataTableExt.afnFiltering.push(
-    // 	    function( oSettings, aData, iDataIndex ) {
-    // 	    	return true;
-    // 	    }
-    // 	);
-
-    $(document).ready(function() {
-        $("form#search select").change(function() {
-            $("form#search").submit();
-        });
-
-        $("button#search").click(function(el) {
-            $("form#search").attr('action', "${searchUrl}");
-        });
-    });
-
-</script>
-
-
+<spring:url var="baseUrl" value="scientific-council/bolonha-process/cycle-affinity-management/"/>
 
 <script type='text/javascript'>
 
@@ -54,9 +34,23 @@
             $("form#firstCycleDegree").submit();
         });
 
-        <%--$("button#search").click(function(el) {--%>
-            <%--$("form#search").attr('action', "${searchUrl}");--%>
-        <%--});--%>
+        $(".delete-affinity").click(function(el) {
+            var target = $(el.target);
+            var affinity = target.closest('tr');
+            var id = affinity.data('affinity');
+            var url = "${baseUrl}" + id;
+            $.ajax({
+                url : url,
+                type: "DELETE",
+                headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
+                success : function(res) {
+                    affinity.remove();
+                },
+                error : function(res) {
+                    alert(res.responseText);
+                }
+            });
+        });
 
     });
 
@@ -71,6 +65,7 @@
 <div class="btn-group">
     <a class="btn btn-default" href="${logsUrl}"><spring:message code="label.show.logs"/></a>
 </div>
+<hr />
 <section>
     <form:form id="firstCycleDegree" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
         <div class="form-group">
@@ -83,9 +78,10 @@
 </section>
 <hr />
 <section>
-    <form:form id="newAffinity" role="form" modelAttribute="newAffinity" method="PUT" class="form-horizontal">
+    <form:form id="newAffinity" role="form" modelAttribute="newAffinity" method="POST" class="form-horizontal">
+        ${csrf.field()}
         <div class="form-group">
-            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.potential.affinities"/></label>
+            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.newAffinity"/></label>
             <div class="col-sm-9">
                 <form:select path="secondCycleCourseGroup" id="addAffinity" items="${potentialAffinities}" class="form-control" itemLabel="parentDegreeCurricularPlan.presentationName" itemValue="externalId"/>
             </div>
@@ -110,9 +106,11 @@
         </thead>
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
-            <tr id="affinity-${affinity.externalId}">
+            <tr id="data-affinity=${affinity.externalId}">
                 <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
-                <td><button class="btn btn-danger"><spring:message code="label.delete"/></button></td>
+                <td>
+                    <button class="btn btn-danger delete-affinity"><spring:message code="label.delete"/>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

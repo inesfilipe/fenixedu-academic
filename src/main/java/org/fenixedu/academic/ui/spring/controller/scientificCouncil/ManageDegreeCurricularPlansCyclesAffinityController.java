@@ -4,16 +4,14 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.ui.spring.service.DegreeCurricularPlansCyclesAffinityService;
-import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.spring.portal.SpringApplication;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +25,11 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
     private DegreeCurricularPlansCyclesAffinityService degreeCurricularPlansAffinityCyclesService;
 
     private String redirectHome() {
-        return "redirect:/fenixedu-academic/cycle-affinity-management";
+        return "redirect:/cycle-affinity-management";
+    }
+
+    private String redirectHome(DegreeCurricularPlansCycleBean bean) {
+        return redirectHome() + "?degree=" + bean.getDegree().getExternalId();
     }
 
     private String view(String string) {
@@ -56,19 +58,25 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
         return view("show");
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public String addAffinity(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @ModelAttribute CycleCourseGroupAffinityBean newAffinity) {
         try {
             degreeCurricularPlansAffinityCyclesService.addDestinationAffinity(firstCycleDegree, newAffinity);
-            return redirectHome();
+            return listAllFirstCycle(model, firstCycleDegree, newAffinity);
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
             return listAllFirstCycle(model, firstCycleDegree, newAffinity);
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteSecondCycleAffinity(Model model) {
-        return redirectHome();
+    @RequestMapping(value="{affinity}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<String> deleteSecondCycleAffinity(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @ModelAttribute CycleCourseGroupAffinityBean newAffinity, @PathVariable CycleCourseGroup affinity) {
+        try {
+            degreeCurricularPlansAffinityCyclesService.deleteDestinationAffinity(firstCycleDegree, affinity);
+            return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getLocalizedMessage(), HttpStatus.PRECONDITION_FAILED);
+        }
     }
 }

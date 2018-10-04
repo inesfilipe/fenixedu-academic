@@ -44,7 +44,7 @@ public class DegreeCurricularPlansCyclesAffinityService {
     }
 
     @Atomic
-    public void deleteDestinationAffinity(CycleCourseGroup firstCycleCourseGroup, CycleCourseGroup secondCycleCourseGroup) {
-        firstCycleCourseGroup.getDestinationAffinitiesSet().remove(secondCycleCourseGroup);
+    public void deleteDestinationAffinity(DegreeCurricularPlansCycleBean firstCycleDegree, CycleCourseGroup affinity) {
+        getCycleCourseGroupFromBean(firstCycleDegree).getDestinationAffinitiesSet().remove(affinity);
     }
 }

@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 import pt.ist.fenixframework.Atomic;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class DegreeCurricularPlansCyclesAffinityService {
+public class CyclesAffinityService {
 
     public List<DegreeCurricularPlan> getAllFirstCycleDegrees() {
         return DegreeCurricularPlan.readByDegreeTypesAndState(

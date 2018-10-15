@@ -24,7 +24,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<spring:url var="baseUrl" value="/cycle-affinity-management/deleteAffinity"/>
+<spring:url var="baseUrl" value="/cycle-affinity-management"/>
+<spring:url var="deleteUrl" value="/cycle-affinity-management/deleteAffinity"/>
 
 <script type='text/javascript'>
 
@@ -33,31 +34,6 @@
         $("form#firstCycleDegree select").change(function() {
             $("form#firstCycleDegree").submit();
         });
-
-        <%--$(".delete-affinity").click(function(el) {--%>
-            <%--var result = confirm('<spring:message code="label.are.you.sure"/>');--%>
-            <%--if (result) {--%>
-                <%--var target = $(el.target);--%>
-                <%--var degree = target.closest('tr');--%>
-                <%--var id = degree.data('affinity');--%>
-                <%--var url = "${baseUrl}" + id;--%>
-                <%--console.log(target);--%>
-                <%--console.log(degree);--%>
-                <%--console.log(id);--%>
-
-                <%--$.ajax({--%>
-                    <%--url : url,--%>
-                    <%--type: "DELETE",--%>
-                    <%--headers: { '${csrf.headerName}' :  '${csrf.token}' } ,--%>
-                    <%--success : function(res) {--%>
-                        <%--degree.remove();--%>
-                    <%--},--%>
-                    <%--error : function(res) {--%>
-                        <%--alert(res.responseText);--%>
-                    <%--}--%>
-                <%--});--%>
-            <%--}--%>
-        <%--});--%>
 
     });
 
@@ -115,7 +91,7 @@
             <tr data-affinity="${affinity.externalId}">
                 <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
                 <td>
-                    <form:form  role="form"  action="${baseUrl}" method="POST" class="form-horizontal">
+                    <form:form role="form" action="${deleteUrl}" method="POST" class="form-horizontal">
                         ${csrf.field()}
                         <input hidden name="degree" value="${firstCycleDegree.degree.externalId}"/>
                         <input hidden name="affinity" value="${affinity.externalId}"/>

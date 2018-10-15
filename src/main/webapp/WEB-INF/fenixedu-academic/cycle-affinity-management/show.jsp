@@ -24,7 +24,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<spring:url var="baseUrl" value="scientific-council/bolonha-process/cycle-affinity-management/"/>
+<spring:url var="baseUrl" value="/cycle-affinity-management/deleteAffinity"/>
 
 <script type='text/javascript'>
 
@@ -34,23 +34,30 @@
             $("form#firstCycleDegree").submit();
         });
 
-        $(".delete-affinity").click(function(el) {
-            var target = $(el.target);
-            var affinity = target.closest('tr');
-            var id = affinity.data('affinity');
-            var url = "${baseUrl}" + id;
-            $.ajax({
-                url : url,
-                type: "DELETE",
-                headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
-                success : function(res) {
-                    affinity.remove();
-                },
-                error : function(res) {
-                    alert(res.responseText);
-                }
-            });
-        });
+        <%--$(".delete-affinity").click(function(el) {--%>
+            <%--var result = confirm('<spring:message code="label.are.you.sure"/>');--%>
+            <%--if (result) {--%>
+                <%--var target = $(el.target);--%>
+                <%--var degree = target.closest('tr');--%>
+                <%--var id = degree.data('affinity');--%>
+                <%--var url = "${baseUrl}" + id;--%>
+                <%--console.log(target);--%>
+                <%--console.log(degree);--%>
+                <%--console.log(id);--%>
+
+                <%--$.ajax({--%>
+                    <%--url : url,--%>
+                    <%--type: "DELETE",--%>
+                    <%--headers: { '${csrf.headerName}' :  '${csrf.token}' } ,--%>
+                    <%--success : function(res) {--%>
+                        <%--degree.remove();--%>
+                    <%--},--%>
+                    <%--error : function(res) {--%>
+                        <%--alert(res.responseText);--%>
+                    <%--}--%>
+                <%--});--%>
+            <%--}--%>
+        <%--});--%>
 
     });
 
@@ -90,7 +97,6 @@
     </form:form>
 </section>
 
-
 <hr />
 
 
@@ -106,10 +112,15 @@
         </thead>
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
-            <tr id="data-affinity=${affinity.externalId}">
+            <tr data-affinity="${affinity.externalId}">
                 <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
                 <td>
-                    <button class="btn btn-danger delete-affinity"><spring:message code="label.delete"/>
+                    <form:form  role="form"  action="${baseUrl}" method="POST" class="form-horizontal">
+                        ${csrf.field()}
+                        <input hidden name="degree" value="${firstCycleDegree.degree.externalId}"/>
+                        <input hidden name="affinity" value="${affinity.externalId}"/>
+                        <button class="btn btn-danger delete-affinity"><spring:message code="label.delete"/>
+                    </form:form>
                 </td>
             </tr>
         </c:forEach>

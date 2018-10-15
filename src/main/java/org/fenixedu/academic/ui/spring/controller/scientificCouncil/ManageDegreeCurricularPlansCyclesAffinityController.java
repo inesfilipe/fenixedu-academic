@@ -69,11 +69,14 @@ public class ManageDegreeCurricularPlansCyclesAffinityController {
         }
     }
 
-    @RequestMapping(value="{affinity}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/deleteAffinity", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> deleteSecondCycleAffinity(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @ModelAttribute CycleCourseGroupAffinityBean newAffinity, @PathVariable CycleCourseGroup affinity) {
+//    public ResponseEntity<String> deleteSecondCycleAffinity(Model model, @ModelAttribute DegreeCurricularPlansCycleBean firstCycleDegree, @Pat
+//            hVariable CycleCourseGroup affinity) {
+    public ResponseEntity<String> deleteSecondCycleAffinity(Model model, @RequestParam  DegreeCurricularPlan degree, @RequestParam CycleCourseGroup affinity) {
         try {
-            degreeCurricularPlansAffinityCyclesService.deleteDestinationAffinity(firstCycleDegree, affinity);
+            System.out.println(affinity);
+            degreeCurricularPlansAffinityCyclesService.deleteDestinationAffinity(degree, affinity);
             return new ResponseEntity<String>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getLocalizedMessage(), HttpStatus.PRECONDITION_FAILED);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pt.ist.fenixframework.Atomic;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,8 +44,8 @@ public class DegreeCurricularPlansCyclesAffinityService {
         getCycleCourseGroupFromBean(firstCycleDegree).addDestinationAffinities(newAffinity.getSecondCycleCourseGroup());
     }
 
-    @Atomic
-    public void deleteDestinationAffinity(DegreeCurricularPlansCycleBean firstCycleDegree, CycleCourseGroup affinity) {
-        getCycleCourseGroupFromBean(firstCycleDegree).getDestinationAffinitiesSet().remove(affinity);
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public void deleteDestinationAffinity(DegreeCurricularPlan firstCycleDegree, CycleCourseGroup affinity) {
+        firstCycleDegree.getFirstCycleCourseGroup().removeDestinationAffinities(affinity);
     }
 }

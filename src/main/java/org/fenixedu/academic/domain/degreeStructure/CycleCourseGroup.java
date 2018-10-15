@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import pt.ist.fenixframework.Atomic;
 
-public class CycleCourseGroup extends CycleCourseGroup_Base {
+public class  CycleCourseGroup extends CycleCourseGroup_Base {
 
     public static final Comparator<CycleCourseGroup> COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME =
             new Comparator<CycleCourseGroup>() {

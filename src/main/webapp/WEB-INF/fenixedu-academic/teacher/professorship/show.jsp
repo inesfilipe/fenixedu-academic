@@ -124,18 +124,20 @@ $(document).ready(function() {
 			var target = $(el.target);
 			var professorship = target.closest('tr');
 			var id = professorship.data('professorship');
-			var url = "${baseUrl}" + id;
-			$.ajax({
-				url : url,
-				type: "DELETE",
-                headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
-				success : function(res) {
-						professorship.remove();
-				},
-				error : function(res) {
-					alert(res.responseText);
-				}
-			});	
+			console.log(professorship);
+			console.log(id);
+			<%--var url = "${baseUrl}" + id;--%>
+			<%--$.ajax({--%>
+				<%--url : url,--%>
+				<%--type: "DELETE",--%>
+                <%--headers: { '${csrf.headerName}' :  '${csrf.token}' } ,--%>
+				<%--success : function(res) {--%>
+						<%--professorship.remove();--%>
+				<%--},--%>
+				<%--error : function(res) {--%>
+					<%--alert(res.responseText);--%>
+				<%--}--%>
+			<%--});	--%>
 		}
 	});
 	

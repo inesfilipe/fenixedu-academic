@@ -31,8 +31,13 @@
 
     $(document).ready(function() {
 
-        $("form#firstCycleDegree select").change(function() {
-            $("form#firstCycleDegree").submit();
+        $(function() {
+            //console.log("${firstCycle.parentDegreeCurricularPlan.presentationName}");
+            $("#selectFirstCycle").val("${firstCycle.externalId}").prop('selected', true);
+        });
+
+        $("form#firstCycleForm select").change(function() {
+            $("form#firstCycleForm").submit();
         });
 
     });
@@ -41,7 +46,7 @@
 
 <div class="page-header">
 <h1>
-    <spring:message code="title.manage.degreeCurricularPlans.affinity"/>
+    <spring:message code="title.manage.cycles.affinity"/>
     <small><spring:message code="label.listing" /></small>
 </h1>
 </div>
@@ -50,37 +55,44 @@
 </div>
 <hr />
 <section>
-    <form:form id="firstCycleDegree" role="form" modelAttribute="firstCycleDegree" method="GET" class="form-horizontal">
+    <form:form id="firstCycleForm" role="form" method="GET" class="form-horizontal">
         <div class="form-group">
             <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
             <div class="col-sm-9">
-                <form:select path="degree" id="selectFirstCycle" items="${degreesFirstCycle}" class="form-control" itemLabel="presentationName" itemValue="externalId"/>
+                <select name="firstCycle" id="selectFirstCycle" class="form-control">
+                    <c:forEach var="fc" items="${firstCycles}">
+                        <option value="${fc.externalId}"><c:out value="${fc.parentDegreeCurricularPlan.presentationName}"/></option>
+                    </c:forEach>
+                </select>
             </div>
+            <button type="submit" class="btn btn-primary"><spring:message code="label.search"/></button>
         </div>
     </form:form>
 </section>
 <hr />
 <section>
-    <form:form id="newAffinity" role="form" modelAttribute="newAffinity" method="POST" class="form-horizontal">
+    <form:form role="form" method="POST" class="form-horizontal">
         ${csrf.field()}
+        <input hidden name="firstCycle" value="${firstCycle}"/>
         <div class="form-group">
-            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.newAffinity"/></label>
+            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.addAffinity"/></label>
             <div class="col-sm-9">
-                <form:select path="secondCycleCourseGroup" id="addAffinity" items="${potentialAffinities}" class="form-control" itemLabel="parentDegreeCurricularPlan.presentationName" itemValue="externalId"/>
+                <select name="potentialAffinity" id="addAffinity" class="form-control">
+                    <c:forEach items="${potentialAffinities}" var="sc">
+                        <option value="${sc.externalId}"><c:out value="${sc.parentDegreeCurricularPlan.presentationName}"/></option>
+                    </c:forEach>
+                </select>
             </div>
-            <button type="submit" class="btn btn-primary" id="newAffinity"><spring:message code="label.add" /></button>
+            <button type="submit" class="btn btn-primary"><spring:message code="label.add"/></button>
         </div>
     </form:form>
 </section>
-
 <hr />
-
-
+<br>
 <section>
     <h4>
-        <spring:message code="teacher.professorships.subtitle.departments.all" arguments="${firstCycleDegree.degree.presentationName}"/>
+        <spring:message code="teacher.professorships.subtitle.departments.all" arguments="${firstCycle.parentDegreeCurricularPlan.presentationName}"/>
     </h4>
-
     <table class="table" id="affinities">
         <thead>
         <th><spring:message code="label.affinities"/></th>
@@ -88,14 +100,14 @@
         </thead>
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
-            <tr data-affinity="${affinity.externalId}">
+            <tr>
                 <td><c:out value="${affinity.parentDegreeCurricularPlan.presentationName}" /></td>
                 <td>
                     <form:form role="form" action="${deleteUrl}" method="POST" class="form-horizontal">
                         ${csrf.field()}
-                        <input hidden name="degree" value="${firstCycleDegree.degree.externalId}"/>
+                        <input hidden name="firstCycle" value="${firstCycle.externalId}"/>
                         <input hidden name="affinity" value="${affinity.externalId}"/>
-                        <button class="btn btn-danger delete-affinity"><spring:message code="label.delete"/>
+                        <button class="btn btn-danger"><spring:message code="label.delete"/>
                     </form:form>
                 </td>
             </tr>

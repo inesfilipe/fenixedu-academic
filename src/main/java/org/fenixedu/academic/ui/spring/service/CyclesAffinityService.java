@@ -4,47 +4,49 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
-import org.fenixedu.academic.ui.spring.controller.scientificCouncil.CycleCourseGroupAffinityBean;
-import org.fenixedu.academic.ui.spring.controller.scientificCouncil.DegreeCurricularPlansCycleBean;
 import org.springframework.stereotype.Service;
 import pt.ist.fenixframework.Atomic;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class CyclesAffinityService {
 
-    public List<DegreeCurricularPlan> getAllFirstCycleDegrees() {
-        return DegreeCurricularPlan.readByDegreeTypesAndState(
+    public List<CycleCourseGroup> getAllFirstCycles() {
+        List<CycleCourseGroup> firstCycles = new ArrayList<CycleCourseGroup>();
+
+        DegreeCurricularPlan.readByDegreeTypesAndState(
                 DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree),
-                DegreeCurricularPlanState.ACTIVE).stream().sorted(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME).collect(Collectors.toList());
+                DegreeCurricularPlanState.ACTIVE).stream().sorted(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME).forEachOrdered(d -> firstCycles.add(d.getFirstCycleCourseGroup()));
+
+        return firstCycles;
     }
 
-    public CycleCourseGroup getCycleCourseGroupFromBean(final DegreeCurricularPlansCycleBean degree) {
-        return degree.getDegree().getFirstCycleCourseGroup();
-    }
-
-    public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(final DegreeCurricularPlansCycleBean firstCycleDegree) {
-        return getCycleCourseGroupFromBean(firstCycleDegree).getDestinationAffinitiesSet().stream().
+    public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(final CycleCourseGroup firstCycle) {
+        return firstCycle.getDestinationAffinitiesSet().stream().
                 sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).collect(Collectors.toList());
     }
 
-    public List<CycleCourseGroup> getSecondCycleDegreesWithoutAffinity(final DegreeCurricularPlansCycleBean firstCycleDegree) {
-        List<CycleCourseGroup> affinities = getSecondCycleDegreesWithAffinity(firstCycleDegree);
+    public List<CycleCourseGroup> getSecondCycleDegreesWithoutAffinity(final CycleCourseGroup firstCycle, final List<CycleCourseGroup> affinities) {
 
-        return getCycleCourseGroupFromBean(firstCycleDegree).getAllPossibleAffinities().stream().
+        return firstCycle.getAllPossibleAffinities().stream().
                 filter(c -> !affinities.contains(c)).sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).
                 collect(Collectors.toList());
     }
 
+    public List<CycleCourseGroup> getSecondCycleDegreesWithoutAffinity(final CycleCourseGroup firstCycle) {
+        return getSecondCycleDegreesWithoutAffinity(firstCycle, getSecondCycleDegreesWithAffinity(firstCycle));
+    }
+
+
     @Atomic
-    public void addDestinationAffinity(DegreeCurricularPlansCycleBean firstCycleDegree, CycleCourseGroupAffinityBean newAffinity) {
-        getCycleCourseGroupFromBean(firstCycleDegree).addDestinationAffinities(newAffinity.getSecondCycleCourseGroup());
+    public void addDestinationAffinity(CycleCourseGroup firstCycle, CycleCourseGroup secondCycle) {
+        firstCycle.addDestinationAffinities(secondCycle);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public void deleteDestinationAffinity(DegreeCurricularPlan firstCycleDegree, CycleCourseGroup affinity) {
-        firstCycleDegree.getFirstCycleCourseGroup().removeDestinationAffinities(affinity);
+    public void deleteDestinationAffinity(CycleCourseGroup firstCycle, CycleCourseGroup secondCycle) {
+        firstCycle.removeDestinationAffinities(secondCycle);
     }
 }

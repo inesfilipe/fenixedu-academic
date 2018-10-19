@@ -25,6 +25,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <spring:url var="baseUrl" value="/cycle-affinity-management"/>
+<spring:url var="logsUrl" value="/cycle-affinity-management/logs"/>
 <spring:url var="deleteUrl" value="/cycle-affinity-management/deleteAffinity"/>
 
 <script type='text/javascript'>
@@ -47,7 +48,7 @@
 <div class="page-header">
 <h1>
     <spring:message code="title.manage.cycles.affinity"/>
-    <small><spring:message code="label.listing" /></small>
+    <small><spring:message code="label.history" /></small>
 </h1>
 </div>
 <div class="btn-group">

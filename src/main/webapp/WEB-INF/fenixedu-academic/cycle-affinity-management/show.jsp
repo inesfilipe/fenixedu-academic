@@ -41,6 +41,13 @@
             $("form#firstCycleForm").submit();
         });
 
+        $(".delete-affinity").click(function(el) {
+            var result = confirm('<spring:message code="label.are.you.sure"/>');
+            if (!result) {
+                el.preventDefault();
+            }
+        });
+
     });
 
 </script>
@@ -109,7 +116,7 @@
                         ${csrf.field()}
                         <input hidden name="firstCycle" value="${firstCycle.externalId}"/>
                         <input hidden name="affinity" value="${affinity.externalId}"/>
-                        <button class="btn btn-danger"><spring:message code="label.delete"/>
+                        <button class="btn btn-danger delete-affinity"><spring:message code="label.delete"/>
                     </form:form>
                 </td>
             </tr>

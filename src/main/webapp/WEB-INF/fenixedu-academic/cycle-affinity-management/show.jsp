@@ -48,7 +48,7 @@
 <div class="page-header">
 <h1>
     <spring:message code="title.manage.cycles.affinity"/>
-    <small><spring:message code="label.history" /></small>
+    <small><spring:message code="label.listing" /></small>
 </h1>
 </div>
 <div class="btn-group">
@@ -57,6 +57,7 @@
 <hr />
 <section>
     <form:form id="firstCycleForm" role="form" method="GET" class="form-horizontal">
+        <%--<input hidden name="firstCycle" value="${firstCycle}"/>--%>
         <div class="form-group">
             <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
             <div class="col-sm-9">
@@ -74,7 +75,7 @@
 <section>
     <form:form role="form" method="POST" class="form-horizontal">
         ${csrf.field()}
-        <input hidden name="firstCycle" value="${firstCycle}"/>
+        <input hidden name="firstCycle" value="${firstCycle.externalId}"/>
         <div class="form-group">
             <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.addAffinity"/></label>
             <div class="col-sm-9">

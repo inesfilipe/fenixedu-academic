@@ -126,18 +126,18 @@ $(document).ready(function() {
 			var id = professorship.data('professorship');
 			console.log(professorship);
 			console.log(id);
-			<%--var url = "${baseUrl}" + id;--%>
-			<%--$.ajax({--%>
-				<%--url : url,--%>
-				<%--type: "DELETE",--%>
-                <%--headers: { '${csrf.headerName}' :  '${csrf.token}' } ,--%>
-				<%--success : function(res) {--%>
-						<%--professorship.remove();--%>
-				<%--},--%>
-				<%--error : function(res) {--%>
-					<%--alert(res.responseText);--%>
-				<%--}--%>
-			<%--});	--%>
+			var url = "${baseUrl}" + id;
+			$.ajax({
+				url : url,
+				type: "DELETE",
+                headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
+				success : function(res) {
+						professorship.remove();
+				},
+				error : function(res) {
+					alert(res.responseText);
+				}
+			});
 		}
 	});
 	

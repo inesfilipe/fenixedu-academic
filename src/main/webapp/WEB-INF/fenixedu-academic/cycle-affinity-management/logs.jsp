@@ -29,7 +29,7 @@
 <div class="page-header">
     <h1>
         <spring:message code="title.manage.cycles.affinity"/>
-        <small><spring:message code="label.logs" /></small>
+        <small><spring:message code="label.history" /></small>
     </h1>
 </div>
 

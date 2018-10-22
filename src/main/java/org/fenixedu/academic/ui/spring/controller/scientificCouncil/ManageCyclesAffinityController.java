@@ -22,7 +22,7 @@ public class ManageCyclesAffinityController {
     private CyclesAffinityService cyclesAffinityService;
 
     private String redirectHome() {
-        return "redirect:/scientific-council/bolonha-process/cycle-affinity-management";
+        return "redirect:/cycle-affinity-management";
     }
 
     private String redirectHome(CycleCourseGroup firstCycle) {
@@ -79,8 +79,6 @@ public class ManageCyclesAffinityController {
 
     @RequestMapping(value="/logs", method = RequestMethod.GET)
     public String listLogs(Model model) {
-
-        //TODO fix bug where exception is thrown if adding or removing affinity after reyturning from log
         model.addAttribute("affinityLogs", cyclesAffinityService.getAffinityLogs());
         return view("logs");
     }

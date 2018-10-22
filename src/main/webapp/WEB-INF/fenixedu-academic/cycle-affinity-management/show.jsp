@@ -64,9 +64,8 @@
 <hr />
 <section>
     <form:form id="firstCycleForm" role="form" method="GET" class="form-horizontal">
-        <%--<input hidden name="firstCycle" value="${firstCycle}"/>--%>
         <div class="form-group">
-            <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.firstCycle" /></label>
+            <label for="selectFirstCycle" class="col-sm-1 control-label"><spring:message code="label.first.cycle" /></label>
             <div class="col-sm-9">
                 <select name="firstCycle" id="selectFirstCycle" class="form-control">
                     <c:forEach var="fc" items="${firstCycles}">
@@ -84,7 +83,7 @@
         ${csrf.field()}
         <input hidden name="firstCycle" value="${firstCycle.externalId}"/>
         <div class="form-group">
-            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.addAffinity"/></label>
+            <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.new.affinity"/></label>
             <div class="col-sm-9">
                 <select name="potentialAffinity" id="addAffinity" class="form-control">
                     <c:forEach items="${potentialAffinities}" var="sc">
@@ -100,13 +99,9 @@
 <br>
 <section>
     <h4>
-        <spring:message code="teacher.professorships.subtitle.departments.all" arguments="${firstCycle.parentDegreeCurricularPlan.presentationName}"/>
+        <spring:message code="affinity.list.first.course" arguments="${firstCycle.parentDegreeCurricularPlan.presentationName}"/>
     </h4>
     <table class="table" id="affinities">
-        <thead>
-        <th><spring:message code="label.affinities"/></th>
-        <th></th>
-        </thead>
         <tbody>
         <c:forEach var="affinity" items="${affinities}">
             <tr>

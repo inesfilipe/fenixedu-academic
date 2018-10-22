@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@SpringApplication(path = "degreeAffinityCycles", hint = "Manager", group = "#managers", title = "title.manage.degreeCurricularPlans.affinity")
-@SpringFunctionality(app = ManageCyclesAffinityController.class, title = "title.manage.degreeCurricularPlans.affinity")
+@SpringApplication(path = "degreeAffinityCycles", hint = "Manager", group = "#managers", title = "title.manage.cycles.affinity")
+@SpringFunctionality(app = ManageCyclesAffinityController.class, title = "title.manage.cycles.affinity")
 @RequestMapping("/cycle-affinity-management")
 public class ManageCyclesAffinityController {
 

@@ -19,13 +19,8 @@ import static org.fenixedu.academic.domain.AffinityCycleCourseGroupLog.createLog
 public class CyclesAffinityService {
 
     public List<CycleCourseGroup> getAllFirstCycles() {
-        List<CycleCourseGroup> firstCycles = new ArrayList<CycleCourseGroup>();
-
-        DegreeCurricularPlan.readByDegreeTypesAndState(
-                DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree),
-                DegreeCurricularPlanState.ACTIVE).stream().sorted(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME).forEachOrdered(d -> firstCycles.add(d.getFirstCycleCourseGroup()));
-
-        return firstCycles;
+        return DegreeCurricularPlan.readBolonhaDegreeCurricularPlans().stream().sorted(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME).map(DegreeCurricularPlan::getFirstCycleCourseGroup).filter(Objects::nonNull).collect(
+                Collectors.toList());
     }
 
     public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(final CycleCourseGroup firstCycle) {
@@ -48,13 +43,13 @@ public class CyclesAffinityService {
     @Atomic
     public void addDestinationAffinity(CycleCourseGroup firstCycle, CycleCourseGroup secondCycle) {
         firstCycle.addDestinationAffinities(secondCycle);
-        createLog(Bundle.MESSAGING, "log.affinity.added", firstCycle.getDegree().getPresentationName(), secondCycle.getDegree().getPresentationName());
+        createLog(Bundle.MESSAGING, "log.affinity.added", firstCycle.getParentDegreeCurricularPlan().getPresentationName(), secondCycle.getParentDegreeCurricularPlan().getPresentationName());
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     public void deleteDestinationAffinity(CycleCourseGroup firstCycle, CycleCourseGroup secondCycle) {
         firstCycle.removeDestinationAffinities(secondCycle);
-        createLog(Bundle.MESSAGING, "log.affinity.removed", firstCycle.getDegree().getPresentationName(), secondCycle.getDegree().getPresentationName());
+        createLog(Bundle.MESSAGING, "log.affinity.removed", firstCycle.getParentDegreeCurricularPlan().getPresentationName(), secondCycle.getParentDegreeCurricularPlan().getPresentationName());
     }
 
     public List<AffinityCycleCourseGroupLog> getAffinityLogs() {

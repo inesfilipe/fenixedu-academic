@@ -25,13 +25,13 @@ public class CyclesAffinityService {
 
     public List<CycleCourseGroup> getSecondCycleDegreesWithAffinity(final CycleCourseGroup firstCycle) {
         return firstCycle.getDestinationAffinitiesSet().stream().
-                sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).collect(Collectors.toList());
+                sorted(Comparator.comparing(CycleCourseGroup::getParentDegreeCurricularPlan, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME)).collect(Collectors.toList());
     }
 
     public List<CycleCourseGroup> getSecondCycleDegreesWithoutAffinity(final CycleCourseGroup firstCycle, final List<CycleCourseGroup> affinities) {
 
         return firstCycle.getAllPossibleAffinities().stream().
-                filter(c -> !affinities.contains(c)).sorted(CycleCourseGroup.COMPARATOR_BY_PARENT_DEGREE_PRESENTATION_NAME).
+                filter(c -> !affinities.contains(c)).sorted(Comparator.comparing(CycleCourseGroup::getParentDegreeCurricularPlan, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME)).
                 collect(Collectors.toList());
     }
 

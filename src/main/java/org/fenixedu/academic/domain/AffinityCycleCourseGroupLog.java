@@ -5,10 +5,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class AffinityCycleCourseGroupLog extends AffinityCycleCourseGroupLog_Base {
     
-    public AffinityCycleCourseGroupLog() {
-        super();
-    }
-
     public AffinityCycleCourseGroupLog(String description) {
         super();
         setRootDomainObjectAffinityCycleCourseGroupLog(Bennu.getInstance());

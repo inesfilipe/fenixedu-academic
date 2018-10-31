@@ -124,8 +124,6 @@ $(document).ready(function() {
 			var target = $(el.target);
 			var professorship = target.closest('tr');
 			var id = professorship.data('professorship');
-			console.log(professorship);
-			console.log(id);
 			var url = "${baseUrl}" + id;
 			$.ajax({
 				url : url,
@@ -137,7 +135,7 @@ $(document).ready(function() {
 				error : function(res) {
 					alert(res.responseText);
 				}
-			});
+			});	
 		}
 	});
 	

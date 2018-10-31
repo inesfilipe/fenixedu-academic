@@ -33,7 +33,6 @@
     $(document).ready(function() {
 
         $(function() {
-            //console.log("${firstCycle.parentDegreeCurricularPlan.presentationName}");
             $("#selectFirstCycle").val("${firstCycle.externalId}").prop('selected', true);
         });
 

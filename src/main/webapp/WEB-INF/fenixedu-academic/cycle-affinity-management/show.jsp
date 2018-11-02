@@ -84,9 +84,9 @@
         <div class="form-group">
             <label for="addAffinity" class="col-sm-1 control-label"><spring:message code="label.new.affinity"/></label>
             <div class="col-sm-9">
-                <select name="potentialAffinity" id="addAffinity" class="form-control">
-                    <c:forEach items="${potentialAffinities}" var="sc">
-                        <option value="${sc.externalId}"><c:out value="${sc.parentDegreeCurricularPlan.presentationName}"/></option>
+                <select name="newAffinity" id="addAffinity" class="form-control">
+                    <c:forEach items="${potentialAffinities}" var="pa">
+                        <option value="${pa.externalId}"><c:out value="${pa.parentDegreeCurricularPlan.presentationName}"/></option>
                     </c:forEach>
                 </select>
             </div>

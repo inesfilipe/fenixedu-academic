@@ -2,8 +2,6 @@ package org.fenixedu.academic.ui.spring.service;
 
 import org.fenixedu.academic.domain.AffinityCycleCourseGroupLog;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;

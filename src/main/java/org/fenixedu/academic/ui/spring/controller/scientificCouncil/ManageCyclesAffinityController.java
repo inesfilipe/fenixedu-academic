@@ -34,7 +34,7 @@ public class ManageCyclesAffinityController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String listAllFirstCycle(Model model, @RequestParam(required = false) CycleCourseGroup firstCycle, @RequestParam(required = false) CycleCourseGroup potentialAffinity) {
+    public String listAllFirstCycle(Model model, @RequestParam(required = false) CycleCourseGroup firstCycle, @RequestParam(required = false) CycleCourseGroup newAffinity) {
         List<CycleCourseGroup> firstCycles = cyclesAffinityService.getAllFirstCycles();
 
         if(firstCycle == null) {
@@ -44,26 +44,26 @@ public class ManageCyclesAffinityController {
         List<CycleCourseGroup> affinities = cyclesAffinityService.getSecondCycleDegreesWithAffinity(firstCycle);
         List<CycleCourseGroup> potentialAffinities = cyclesAffinityService.getSecondCycleDegreesWithoutAffinity(firstCycle, affinities);
 
-        if(potentialAffinity == null) {
-            potentialAffinity = potentialAffinities.get(0);
+        if(newAffinity == null) {
+            newAffinity = potentialAffinities.get(0);
         }
 
         model.addAttribute("firstCycles", firstCycles);
         model.addAttribute("firstCycle", firstCycle);
         model.addAttribute("affinities", affinities);
         model.addAttribute("potentialAffinities", potentialAffinities);
-        model.addAttribute("potentialAffinity", potentialAffinity);
+        model.addAttribute("newAffinity", newAffinity);
         return view("show");
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addAffinity(Model model, @RequestParam CycleCourseGroup firstCycle, @RequestParam CycleCourseGroup potentialAffinity) {
+    public String addAffinity(Model model, @RequestParam CycleCourseGroup firstCycle, @RequestParam CycleCourseGroup newAffinity) {
         try {
-            cyclesAffinityService.addDestinationAffinity(firstCycle, potentialAffinity);
+            cyclesAffinityService.addDestinationAffinity(firstCycle, newAffinity);
             return listAllFirstCycle(model, firstCycle, null);
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
-            return listAllFirstCycle(model, firstCycle, potentialAffinity);
+            return listAllFirstCycle(model, firstCycle, newAffinity);
         }
     }
 

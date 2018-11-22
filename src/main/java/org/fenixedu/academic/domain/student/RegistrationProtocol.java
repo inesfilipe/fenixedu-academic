@@ -63,6 +63,18 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     }
 
     @Atomic
+    public static void create(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
+            Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
+            Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
+            Boolean attemptAlmaMatterFromPrecedent) {
+
+        Bennu.getInstance().addRegistrationProtocols(new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
+                payGratuity, allowsIDCard, onlyAllowedDegreeEnrolment, isAlien, exempted, mobility,
+                military, allowDissertationCandidacyWithoutChecks, forOfficialMobilityReporting,
+                attemptAlmaMatterFromPrecedent));
+    }
+
+    @Atomic
     public void addSupervisor(Person supervisor) {
         this.addSupervisors(supervisor);
     }

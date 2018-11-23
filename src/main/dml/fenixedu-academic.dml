@@ -857,6 +857,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
     class AffinityCycleCourseGroupLog extends DomainOperationLog {
     }
 
+    class RegistrationProtocolLog extends DomainOperationLog {
+    }
+
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -8534,6 +8537,16 @@ relation RegistrationProtocolRootDomainObject {
 		multiplicity *;
 	}
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+}
+
+relation BennuRegistrationProtocolLog {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectRegistrationProtocolLog {
+        multiplicity 1..1;
+    }
+
+    RegistrationProtocolLog playsRole RegistrationProtocolLog  {
+        multiplicity 0..*;
+    }
 }
 
 relation ReimbursementGuideEntryGuideEntry {

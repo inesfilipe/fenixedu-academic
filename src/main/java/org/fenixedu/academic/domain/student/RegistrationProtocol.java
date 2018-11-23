@@ -81,7 +81,19 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
             Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
 
-        //TODO
+        setCode(code);
+        setDescription(description);
+        setEnrolmentByStudentAllowed(enrolmentByStudentAllowed);
+        setPayGratuity(payGratuity);
+        setAllowsIDCard(allowsIDCard);
+        setOnlyAllowedDegreeEnrolment(onlyAllowedDegreeEnrolment);
+        setAlien(isAlien);
+        setExempted(exempted);
+        setMobility(mobility);
+        setMilitary(military);
+        setAllowDissertationCandidacyWithoutChecks(allowDissertationCandidacyWithoutChecks);
+        setForOfficialMobilityReporting(forOfficialMobilityReporting);
+        setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
     }
 
     @Atomic

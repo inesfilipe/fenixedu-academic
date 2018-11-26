@@ -30,6 +30,12 @@ public class RegistrationProtocolsService {
                 bean.getForOfficialMobilityReporting(), bean.getAttemptAlmaMatterFromPrecedent());
     }
 
-    public void editRegistrationProtocol(RegistrationProtocolBean bean) {}
+    @Atomic
+    public void editRegistrationProtocol(RegistrationProtocol rp, RegistrationProtocolBean bean) {
+        rp.edit(bean.getCode(), bean.getDescription(), bean.getEnrolmentByStudentAllowed(),
+                bean.getPayGratuity(), bean.getAllowsIDCard(), bean.getOnlyAllowedDegreeEnrolment(), bean.getAlien(),
+                bean.getExempted(), bean.getMobility(), bean.getMilitary(), bean.getAllowDissertationCandidacyWithoutChecks(),
+                bean.getForOfficialMobilityReporting(), bean.getAttemptAlmaMatterFromPrecedent());
+    }
 
 }

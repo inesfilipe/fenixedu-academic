@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class RegistrationProtocolsService {
 
-    public List<RegistrationProtocol> getAllInterestRates() {
+    public List<RegistrationProtocol> getAllRegistrationProtocols() {
         return Bennu.getInstance().getRegistrationProtocolsSet().stream().sorted(RegistrationProtocol.AGREEMENT_COMPARATOR).
                 collect(Collectors.toList());
     }

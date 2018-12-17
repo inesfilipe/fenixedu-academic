@@ -25,10 +25,15 @@ public class ManageRegistrationProtocolsController {
         return "redirect:/registrationProtocols";
     }
 
+    private String view(String string) {
+        return "fenixedu-academic/registrationProtocol/" + string;
+    }
+
+
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("registrationProtocols", registrationProtocolsService.getAllRegistrationProtocols());
-        return redirectHome(); //TODO: replace this with proper name
+        return view("show"); //TODO: replace this with proper name
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "create")
@@ -39,7 +44,7 @@ public class ManageRegistrationProtocolsController {
     @RequestMapping(method = RequestMethod.PUT, value = "create")
     public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
         try {
-            registrationProtocolsService.createRegistrationProtocol(bean);
+            //registrationProtocolsService.createRegistrationProtocol(bean);
             return redirectHome();
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
@@ -50,7 +55,7 @@ public class ManageRegistrationProtocolsController {
     @RequestMapping(method = RequestMethod.POST, value = "{registrationProtocol}")
     public String edit(Model model, @PathVariable RegistrationProtocol rp, @ModelAttribute RegistrationProtocolBean bean) {
         try {
-            registrationProtocolsService.editRegistrationProtocol(rp, bean);
+            //registrationProtocolsService.editRegistrationProtocol(rp, bean);
             return redirectHome();
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());

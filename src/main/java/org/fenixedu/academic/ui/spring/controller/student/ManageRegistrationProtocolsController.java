@@ -33,7 +33,7 @@ public class ManageRegistrationProtocolsController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("registrationProtocols", registrationProtocolsService.getAllRegistrationProtocols());
-        return view("show"); //TODO: replace this with proper name
+        return view("show");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "create")
@@ -53,13 +53,13 @@ public class ManageRegistrationProtocolsController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{registrationProtocol}")
-    public String edit(Model model, @PathVariable RegistrationProtocol rp) {
+    public String edit(Model model, @PathVariable RegistrationProtocol registrationProtocol) {
         try {
-            //registrationProtocolsService.editRegistrationProtocol(rp, bean);
-            return redirectHome();
+            model.addAttribute("registrationProtocol", registrationProtocol);
+            return view("edit");
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
-            return redirectHome(); //TODO: replace
+            return redirectHome();
         }
     }
 

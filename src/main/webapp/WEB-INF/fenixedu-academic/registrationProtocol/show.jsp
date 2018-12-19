@@ -11,6 +11,36 @@
 <c:set var="yes"><spring:message code="label.yes"/></c:set>
 <c:set var="no"><spring:message code="label.no"/></c:set>
 
+<script type='text/javascript'>
+
+    $(document).ready(function() {
+
+        function toggle(icon) {
+            if (icon.hasClass("glyphicon-collapse-down")) {
+                icon.removeClass("glyphicon-collapse-down");
+                icon.addClass("glyphicon-collapse-up");
+            } else if (icon.hasClass("glyphicon-collapse-up")) {
+                icon.removeClass("glyphicon-collapse-up");
+                icon.addClass("glyphicon-collapse-down");
+            }
+        }
+
+        $(".show-details").click(function(el) {
+            el.preventDefault();
+            el.stopPropagation();
+            $(el.target).closest("tr").next().toggle();
+
+            var icon = $(el.target).find("i");
+            toggle(icon);
+
+        });
+
+        $(".details").hide();
+
+    });
+
+</script>
+
 <div class="page-header">
     <h2>
         <spring:message code="title.manage.registrationProtocols"/>
@@ -38,11 +68,14 @@
                 <c:out value="${registrationProtocol.description}"/>
             </td>
             <td>
-                <%--<a href="${baseUrl}${interestRate.externalId}" class="btn btn-default"><spring:message code="label.edit"/></a>--%>
-                <%-- TO DO: add dynamic hide and show of details, change the width somehow, change labels--%>
+                <button class="btn btn-default showHideDetailsButton show-details"><i class="glyphicon glyphicon-collapse-down"></i><spring:message code="label.details"/></button>
+                    <%-- TO DO: add dynamic hide and show of details, change the width somehow, change labels--%>
+            </td>
+            <td>
+                <a href="${baseUrl}${registrationProtocol.externalId}" class="btn btn-default"><spring:message code="label.edit"/></a>
             </td>
         </tr>
-        <tr>
+        <tr class="details">
             <td></td>
             <td colspan="1">
             <table class="table" colspan="2">

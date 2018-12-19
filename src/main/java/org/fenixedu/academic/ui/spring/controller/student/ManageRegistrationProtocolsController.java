@@ -52,6 +52,17 @@ public class ManageRegistrationProtocolsController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "{registrationProtocol}")
+    public String edit(Model model, @PathVariable RegistrationProtocol rp) {
+        try {
+            //registrationProtocolsService.editRegistrationProtocol(rp, bean);
+            return redirectHome();
+        } catch (DomainException de) {
+            model.addAttribute("error", de.getLocalizedMessage());
+            return redirectHome(); //TODO: replace
+        }
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "{registrationProtocol}")
     public String edit(Model model, @PathVariable RegistrationProtocol rp, @ModelAttribute RegistrationProtocolBean bean) {
         try {

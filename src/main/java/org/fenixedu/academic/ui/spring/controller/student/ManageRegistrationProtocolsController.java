@@ -38,10 +38,10 @@ public class ManageRegistrationProtocolsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "create")
     public String create(Model model) {
-        return redirectHome(); //TODO: replace
+        return view("edit");
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "create")
+    @RequestMapping(method = RequestMethod.POST, value = "create")
     public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
         try {
             //registrationProtocolsService.createRegistrationProtocol(bean);

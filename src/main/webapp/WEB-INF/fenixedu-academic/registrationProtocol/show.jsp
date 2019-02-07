@@ -65,11 +65,11 @@
                 <c:out value="${registrationProtocol.code}"/>
             </td>
             <td>
-                <c:out value="${registrationProtocol.description}"/>
+                <c:out value="${registrationProtocol.description.json()}"/>
             </td>
             <td>
                 <button class="btn btn-default showHideDetailsButton show-details"><i class="glyphicon glyphicon-collapse-down"></i><spring:message code="label.details"/></button>
-                    <%-- TO DO: add dynamic hide and show of details, change the width somehow, change labels--%>
+                    <%-- TO DO: change the width somehow, change labels--%>
             </td>
             <td>
                 <a href="${baseUrl}${registrationProtocol.externalId}" class="btn btn-default"><spring:message code="label.edit"/></a>

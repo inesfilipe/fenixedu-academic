@@ -44,7 +44,7 @@ public class ManageRegistrationProtocolsController {
     @RequestMapping(method = RequestMethod.POST, value = "create")
     public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
         try {
-            //registrationProtocolsService.createRegistrationProtocol(bean);
+            registrationProtocolsService.createRegistrationProtocol(bean);
             return redirectHome();
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());

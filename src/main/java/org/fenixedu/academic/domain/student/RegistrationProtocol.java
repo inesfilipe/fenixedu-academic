@@ -20,8 +20,11 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
+import static org.fenixedu.academic.domain.RegistrationProtocolLog.createLog;
+
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -68,7 +71,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
             Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
 
-        //TODO:this is probably wrong
         Bennu.getInstance().addRegistrationProtocols(new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
                 payGratuity, allowsIDCard, onlyAllowedDegreeEnrolment, isAlien, exempted, mobility,
                 military, allowDissertationCandidacyWithoutChecks, forOfficialMobilityReporting,
@@ -80,6 +82,20 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
             Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
+
+        createLog(Bundle.MESSAGING, "log.interestRate.edited", getExternalId(),getCode(), code,
+                getDescription().toString(), description.toString(),
+                getEnrolmentByStudentAllowed().toString(), enrolmentByStudentAllowed.toString(),
+                getPayGratuity().toString(), payGratuity.toString(),
+                getAllowsIDCard().toString(), allowsIDCard.toString(),
+                getOnlyAllowedDegreeEnrolment().toString(), onlyAllowedDegreeEnrolment.toString(),
+                getAlien().toString(), isAlien.toString(),
+                getExempted().toString(), exempted.toString(),
+                getMobility().toString(), mobility.toString(),
+                getMilitary().toString(), military.toString(),
+                getAllowDissertationCandidacyWithoutChecks().toString(), allowDissertationCandidacyWithoutChecks.toString(),
+                getForOfficialMobilityReporting().toString(), forOfficialMobilityReporting.toString(),
+                getAttemptAlmaMatterFromPrecedent().toString(), attemptAlmaMatterFromPrecedent.toString());
 
         setCode(code);
         setDescription(description);

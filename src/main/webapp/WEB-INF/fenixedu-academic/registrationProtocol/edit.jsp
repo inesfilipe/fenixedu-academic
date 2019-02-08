@@ -32,70 +32,58 @@ ${portal.toolkit()}
         <div class="form-group">
             <label for="code" class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.code" /></label>
             <div>
-                <input id="code" name="code" type="text" class="col-md-5" value='<c:out value="${registrationProtocol.code}"/>' required/>
+                <input id="code" name="code" type="text" class="col-md-5" value='<c:out value="${bean.code}"/>' required/>
             </div>
         </div>
         <div class="form-group">
             <label for="description" class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.description" /></label>
             <div>
-                <input bennu-localized-string type="text" id="description" name="description" type="text" value='<c:out value="${registrationProtocol.description.json()}"/>' required/>
+                <input bennu-localized-string type="text" id="description" name="description" type="text" value='<c:out value="${bean.description.json()}"/>' required/>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.enrolmentByStudent"/></label>
-            <input type="checkbox" name="enrolmentByStudentAllowed" value="true" ${registrationProtocol.enrolmentByStudentAllowed == true ? 'checked':''}>
-            <input type="hidden" name="enrolmentByStudentAllowed" value="false">
+            <form:checkbox path="enrolmentByStudentAllowed" value="${bean.enrolmentByStudentAllowed}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.payGratuity"/></label>
-            <input type="checkbox" name="payGratuity" value="true" ${registrationProtocol.payGratuity == true ? 'checked':''}>
-            <input type="hidden" name="payGratuity" value="false">
-
+            <form:checkbox path="payGratuity" value="${bean.payGratuity}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.allowsIDCard"/></label>
-            <input type="checkbox" name="allowsIDCard" value="true" ${registrationProtocol.allowsIDCard == true ? 'checked':''}>
-            <input type="hidden" name="allowsIDCard" value="false">
+            <form:checkbox path="allowsIDCard" value="${bean.allowsIDCard}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.onlyAllowedDegreeEnrolment"/></label>
-            <input type="checkbox" name="onlyAllowedDegreeEnrolment" value="true" ${registrationProtocol.onlyAllowedDegreeEnrolment == true ? 'checked':''}>
-            <input type="hidden" name="onlyAllowedDegreeEnrolment" value="false">
+            <form:checkbox path="onlyAllowedDegreeEnrolment" value="${bean.onlyAllowedDegreeEnrolment}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.alien"/></label>
-            <input type="checkbox" name="alien" value="true" ${registrationProtocol.alien == true ? 'checked':''}>
-            <input type="hidden" name="alien" value="false">
+            <form:checkbox path="alien" value="${bean.alien}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.exempted"/></label>
-            <input type="checkbox" name="exempted" value="true" ${registrationProtocol.exempted == true ? 'checked':''}>
-            <input type="hidden" name="exempted" value="false">
+            <form:checkbox path="exempted" value="${bean.exempted}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.mobility"/></label>
-            <input type="checkbox" name="mobility" value="true" ${registrationProtocol.mobility == true ? 'checked':''}>
-            <input type="hidden" name="mobility" value="false">
+            <form:checkbox path="mobility" value="${bean.mobility}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.military"/></label>
-            <input type="checkbox" name="military" value="true" ${registrationProtocol.military == true ? 'checked':''}>
-            <input type="hidden" name="military" value="false">
+            <form:checkbox path="military" value="${bean.military}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.allowDissertationCandidacyNoChecks"/></label>
-            <input type="checkbox" name="allowDissertationCandidacyWithoutChecks" value="true" ${registrationProtocol.allowDissertationCandidacyWithoutChecks == true ? 'checked':''}>
-            <input type="hidden" name="allowDissertationCandidacyWithoutChecks" value="false">
+            <form:checkbox path="allowDissertationCandidacyWithoutChecks" value="${bean.allowDissertationCandidacyWithoutChecks}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.forOfficialMobilityReporting"/></label>
-            <input type="checkbox" name="forOfficialMobilityReporting" value="true" ${registrationProtocol.forOfficialMobilityReporting == true ? 'checked':''}>
-            <input type="hidden" name="forOfficialMobilityReporting" value="false">
+            <form:checkbox path="forOfficialMobilityReporting" value="${bean.forOfficialMobilityReporting}" />
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.attemptAlmaMatterFromPrecedent"/></label>
-            <input type="checkbox" name="attemptAlmaMatterFromPrecedent" value="true" ${registrationProtocol.attemptAlmaMatterFromPrecedent == true ? 'checked':''}>
-            <input type="hidden" name="attemptAlmaMatterFromPrecedent" value="false">
+            <form:checkbox path="attemptAlmaMatterFromPrecedent" value="${bean.attemptAlmaMatterFromPrecedent}" />
         </div>
 
         <div class="form-group">

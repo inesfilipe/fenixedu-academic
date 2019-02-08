@@ -6,17 +6,17 @@ public class RegistrationProtocolBean {
 
     private String code;
     private LocalizedString description;
-    private Boolean enrolmentByStudentAllowed;
-    private Boolean payGratuity;
-    private Boolean allowsIDCard;
-    private Boolean onlyAllowedDegreeEnrolment;
-    private Boolean isAlien;
-    private Boolean exempted;
-    private Boolean mobility;
-    private Boolean military;
-    private Boolean allowDissertationCandidacyWithoutChecks;
-    private Boolean forOfficialMobilityReporting;
-    private Boolean attemptAlmaMatterFromPrecedent;
+    private boolean enrolmentByStudentAllowed;
+    private boolean payGratuity;
+    private boolean allowsIDCard;
+    private boolean onlyAllowedDegreeEnrolment;
+    private boolean isAlien;
+    private boolean exempted;
+    private boolean mobility;
+    private boolean military;
+    private boolean allowDissertationCandidacyWithoutChecks;
+    private boolean forOfficialMobilityReporting;
+    private boolean attemptAlmaMatterFromPrecedent;
 
     public String getCode() {
         return code;
@@ -26,47 +26,47 @@ public class RegistrationProtocolBean {
         return description;
     }
 
-    public Boolean getEnrolmentByStudentAllowed() {
+    public boolean getEnrolmentByStudentAllowed() {
         return enrolmentByStudentAllowed;
     }
 
-    public Boolean getPayGratuity() {
+    public boolean getPayGratuity() {
         return payGratuity;
     }
 
-    public Boolean getAllowsIDCard() {
+    public boolean getAllowsIDCard() {
         return allowsIDCard;
     }
 
-    public Boolean getOnlyAllowedDegreeEnrolment() {
+    public boolean getOnlyAllowedDegreeEnrolment() {
         return onlyAllowedDegreeEnrolment;
     }
 
-    public Boolean getAlien() {
+    public boolean getAlien() {
         return isAlien;
     }
 
-    public Boolean getExempted() {
+    public boolean getExempted() {
         return exempted;
     }
 
-    public Boolean getMobility() {
+    public boolean getMobility() {
         return mobility;
     }
 
-    public Boolean getMilitary() {
+    public boolean getMilitary() {
         return military;
     }
 
-    public Boolean getAllowDissertationCandidacyWithoutChecks() {
+    public boolean getAllowDissertationCandidacyWithoutChecks() {
         return allowDissertationCandidacyWithoutChecks;
     }
 
-    public Boolean getForOfficialMobilityReporting() {
+    public boolean getForOfficialMobilityReporting() {
         return forOfficialMobilityReporting;
     }
 
-    public Boolean getAttemptAlmaMatterFromPrecedent() {
+    public boolean getAttemptAlmaMatterFromPrecedent() {
         return attemptAlmaMatterFromPrecedent;
     }
 
@@ -78,47 +78,47 @@ public class RegistrationProtocolBean {
         this.description = description;
     }
 
-    public void setEnrolmentByStudentAllowed(Boolean enrolmentByStudentAllowed) {
+    public void setEnrolmentByStudentAllowed(boolean enrolmentByStudentAllowed) {
         this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
     }
 
-    public void setPayGratuity(Boolean payGratuity) {
+    public void setPayGratuity(boolean payGratuity) {
         this.payGratuity = payGratuity;
     }
 
-    public void setAllowsIDCard(Boolean allowsIDCard) {
+    public void setAllowsIDCard(boolean allowsIDCard) {
         this.allowsIDCard = allowsIDCard;
     }
 
-    public void setOnlyAllowedDegreeEnrolment(Boolean onlyAllowedDegreeEnrolment) {
+    public void setOnlyAllowedDegreeEnrolment(boolean onlyAllowedDegreeEnrolment) {
         this.onlyAllowedDegreeEnrolment = onlyAllowedDegreeEnrolment;
     }
 
-    public void setAlien(Boolean alien) {
+    public void setAlien(boolean alien) {
         isAlien = alien;
     }
 
-    public void setExempted(Boolean exempted) {
+    public void setExempted(boolean exempted) {
         this.exempted = exempted;
     }
 
-    public void setMobility(Boolean mobility) {
+    public void setMobility(boolean mobility) {
         this.mobility = mobility;
     }
 
-    public void setMilitary(Boolean military) {
+    public void setMilitary(boolean military) {
         this.military = military;
     }
 
-    public void setAllowDissertationCandidacyWithoutChecks(Boolean allowDissertationCandidacyWithoutChecks) {
+    public void setAllowDissertationCandidacyWithoutChecks(boolean allowDissertationCandidacyWithoutChecks) {
         this.allowDissertationCandidacyWithoutChecks = allowDissertationCandidacyWithoutChecks;
     }
 
-    public void setForOfficialMobilityReporting(Boolean forOfficialMobilityReporting) {
+    public void setForOfficialMobilityReporting(boolean forOfficialMobilityReporting) {
         this.forOfficialMobilityReporting = forOfficialMobilityReporting;
     }
 
-    public void setAttemptAlmaMatterFromPrecedent(Boolean attemptAlmaMatterFromPrecedent) {
+    public void setAttemptAlmaMatterFromPrecedent(boolean attemptAlmaMatterFromPrecedent) {
         this.attemptAlmaMatterFromPrecedent = attemptAlmaMatterFromPrecedent;
     }
 }

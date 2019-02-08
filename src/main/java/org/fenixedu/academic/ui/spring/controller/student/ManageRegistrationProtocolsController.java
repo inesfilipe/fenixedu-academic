@@ -37,12 +37,13 @@ public class ManageRegistrationProtocolsController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "create")
-    public String create(Model model) {
+    public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
+        model.addAttribute(bean);
         return view("edit");
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "create")
-    public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
+    public String createp(Model model, @ModelAttribute RegistrationProtocolBean bean) {
         try {
             registrationProtocolsService.createRegistrationProtocol(bean);
             return redirectHome();
@@ -53,9 +54,23 @@ public class ManageRegistrationProtocolsController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{registrationProtocol}")
-    public String edit(Model model, @PathVariable RegistrationProtocol registrationProtocol) {
+    public String edit(Model model, @PathVariable RegistrationProtocol registrationProtocol, @ModelAttribute RegistrationProtocolBean bean) {
         try {
-            model.addAttribute("registrationProtocol", registrationProtocol);
+            bean.setCode(registrationProtocol.getCode());
+            bean.setDescription(registrationProtocol.getDescription());
+            bean.setEnrolmentByStudentAllowed(registrationProtocol.getEnrolmentByStudentAllowed());
+            bean.setPayGratuity(registrationProtocol.getPayGratuity());
+            bean.setAllowsIDCard(registrationProtocol.getAllowsIDCard());
+            bean.setOnlyAllowedDegreeEnrolment(registrationProtocol.getOnlyAllowedDegreeEnrolment());
+            bean.setAlien(registrationProtocol.getAlien());
+            bean.setExempted(registrationProtocol.getExempted());
+            bean.setMobility(registrationProtocol.getMobility());
+            bean.setMilitary(registrationProtocol.getMilitary());
+            bean.setAllowDissertationCandidacyWithoutChecks(registrationProtocol.getAllowDissertationCandidacyWithoutChecks());
+            bean.setForOfficialMobilityReporting(registrationProtocol.getForOfficialMobilityReporting());
+            bean.setAttemptAlmaMatterFromPrecedent(registrationProtocol.attemptAlmaMatterFromPrecedent());
+
+            model.addAttribute("bean", bean);
             return view("edit");
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
@@ -64,7 +79,7 @@ public class ManageRegistrationProtocolsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "{registrationProtocol}")
-    public String edit(Model model, @PathVariable RegistrationProtocol registrationProtocol, @ModelAttribute RegistrationProtocolBean bean) {
+    public String editp(Model model, @PathVariable RegistrationProtocol registrationProtocol, @ModelAttribute RegistrationProtocolBean bean) {
         try {
             registrationProtocolsService.editRegistrationProtocol(registrationProtocol, bean);
             return redirectHome();

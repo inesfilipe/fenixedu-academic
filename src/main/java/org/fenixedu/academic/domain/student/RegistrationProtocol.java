@@ -71,10 +71,24 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
             Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
 
-        Bennu.getInstance().addRegistrationProtocols(new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
+        RegistrationProtocol rp = new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
                 payGratuity, allowsIDCard, onlyAllowedDegreeEnrolment, isAlien, exempted, mobility,
                 military, allowDissertationCandidacyWithoutChecks, forOfficialMobilityReporting,
-                attemptAlmaMatterFromPrecedent));
+                attemptAlmaMatterFromPrecedent);
+
+        createLog(Bundle.MESSAGING, "log.registrationProtocol.created", rp.getExternalId(), code,
+                description.toString(),
+                enrolmentByStudentAllowed.toString(),
+                payGratuity.toString(),
+                allowsIDCard.toString(),
+                onlyAllowedDegreeEnrolment.toString(),
+                isAlien.toString(),
+                exempted.toString(),
+                mobility.toString(),
+                military.toString(),
+                allowDissertationCandidacyWithoutChecks.toString(),
+                forOfficialMobilityReporting.toString(),
+                attemptAlmaMatterFromPrecedent.toString());
     }
 
     @Atomic

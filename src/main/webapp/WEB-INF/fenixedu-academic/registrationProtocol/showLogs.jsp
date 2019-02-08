@@ -9,6 +9,7 @@
 <div class="page-header">
     <h2>
         <spring:message code="title.manage.registrationProtocols"/>
+        <small><spring:message code="label.history" /></small>
     </h2>
 </div>
 

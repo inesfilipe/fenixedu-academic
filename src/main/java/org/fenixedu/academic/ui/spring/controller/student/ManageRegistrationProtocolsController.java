@@ -38,7 +38,7 @@ public class ManageRegistrationProtocolsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "create")
     public String create(Model model, @ModelAttribute RegistrationProtocolBean bean) {
-        model.addAttribute(bean);
+        model.addAttribute("bean", bean);
         return view("edit");
     }
 

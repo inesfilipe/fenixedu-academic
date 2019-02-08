@@ -77,6 +77,6 @@ public class ManageRegistrationProtocolsController {
     @RequestMapping(method = RequestMethod.GET, value = "logs")
     public String listLogs(Model model) {
         model.addAttribute("registrationProtocolsLogs", registrationProtocolsService.getAllRegistrationProtocolLogs());
-        return redirectHome(); //TODO: replace
+        return view("showLogs");
     }
 }

@@ -42,7 +42,7 @@ ${portal.toolkit()}
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.enrolmentByStudent"/></label>
+            <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.enrolmentByStudentAllowed"/></label>
             <form:checkbox path="enrolmentByStudentAllowed" value="${bean.enrolmentByStudentAllowed}" />
         </div>
         <div class="form-group">

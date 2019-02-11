@@ -80,7 +80,7 @@
             <td colspan="1">
             <table class="table" colspan="2">
                 <tr>
-                <th><spring:message code="label.registrationProtocol.enrolmentByStudent"/></th>
+                <th><spring:message code="label.registrationProtocol.enrolmentByStudentAllowed"/></th>
                     <td><c:out value="${registrationProtocol.enrolmentByStudentAllowed ? yes : no}" /></td>
                 </tr>
                 <tr>

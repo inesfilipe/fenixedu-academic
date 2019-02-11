@@ -68,7 +68,7 @@ public class ManageRegistrationProtocolsController {
             bean.setMilitary(registrationProtocol.getMilitary());
             bean.setAllowDissertationCandidacyWithoutChecks(registrationProtocol.getAllowDissertationCandidacyWithoutChecks());
             bean.setForOfficialMobilityReporting(registrationProtocol.getForOfficialMobilityReporting());
-            bean.setAttemptAlmaMatterFromPrecedent(registrationProtocol.attemptAlmaMatterFromPrecedent());
+            bean.setAttemptAlmaMatterFromPrecedent(registrationProtocol.getAttemptAlmaMatterFromPrecedent());
 
             model.addAttribute("bean", bean);
             return view("edit");

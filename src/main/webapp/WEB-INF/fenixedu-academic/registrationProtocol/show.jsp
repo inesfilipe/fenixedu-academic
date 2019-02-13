@@ -112,10 +112,6 @@
                     <td><c:out value="${registrationProtocol.military ? yes : no}" /></td>
                 </tr>
                 <tr>
-                    <th><spring:message code="label.registrationProtocol.allowDissertationCandidacyNoChecks"/></th>
-                    <td><c:out value="${registrationProtocol.allowDissertationCandidacyWithoutChecks ? yes : no}" /></td>
-                </tr>
-                <tr>
                     <th><spring:message code="label.registrationProtocol.forOfficialMobilityReporting"/></th>
                     <td><c:out value="${registrationProtocol.forOfficialMobilityReporting ? yes : no}" /></td>
                 </tr>

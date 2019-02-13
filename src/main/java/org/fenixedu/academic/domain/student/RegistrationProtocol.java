@@ -47,7 +47,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     public RegistrationProtocol(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
-            Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
+            Boolean military, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
         setRootDomainObject(Bennu.getInstance());
         setCode(code);
@@ -60,7 +60,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setExempted(exempted);
         setMobility(mobility);
         setMilitary(military);
-        setAllowDissertationCandidacyWithoutChecks(allowDissertationCandidacyWithoutChecks);
         setForOfficialMobilityReporting(forOfficialMobilityReporting);
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
     }
@@ -68,12 +67,12 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     @Atomic
     public static void create(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
-            Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
+            Boolean military, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
 
         RegistrationProtocol rp = new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
                 payGratuity, allowsIDCard, onlyAllowedDegreeEnrolment, isAlien, exempted, mobility,
-                military, allowDissertationCandidacyWithoutChecks, forOfficialMobilityReporting,
+                military, forOfficialMobilityReporting,
                 attemptAlmaMatterFromPrecedent);
 
         createLog(Bundle.MESSAGING, "log.registrationProtocol.created", rp.getExternalId(), code,
@@ -86,7 +85,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
                 exempted.toString(),
                 mobility.toString(),
                 military.toString(),
-                allowDissertationCandidacyWithoutChecks.toString(),
                 forOfficialMobilityReporting.toString(),
                 attemptAlmaMatterFromPrecedent.toString());
     }
@@ -94,7 +92,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     @Atomic
     public void edit(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
-            Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
+            Boolean military, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
 
         createLog(Bundle.MESSAGING, "log.registrationProtocol.edited", getExternalId(), getCode(), code,
@@ -116,8 +114,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
                 mobility.toString(),
                 getMilitary().toString(),
                 military.toString(),
-                getAllowDissertationCandidacyWithoutChecks().toString(),
-                allowDissertationCandidacyWithoutChecks.toString(),
                 getForOfficialMobilityReporting().toString(),
                 forOfficialMobilityReporting.toString(),
                 getAttemptAlmaMatterFromPrecedent().toString(),
@@ -133,7 +129,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setExempted(exempted);
         setMobility(mobility);
         setMilitary(military);
-        setAllowDissertationCandidacyWithoutChecks(allowDissertationCandidacyWithoutChecks);
         setForOfficialMobilityReporting(forOfficialMobilityReporting);
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
     }
@@ -171,11 +166,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     public boolean isToPayGratuity() {
         return getPayGratuity() != null && getPayGratuity().booleanValue();
-    }
-
-    public boolean allowDissertationCandidacyWithoutChecks() {
-        return getAllowDissertationCandidacyWithoutChecks() != null
-                && getAllowDissertationCandidacyWithoutChecks().booleanValue();
     }
 
     public boolean isMobilityAgreement() {

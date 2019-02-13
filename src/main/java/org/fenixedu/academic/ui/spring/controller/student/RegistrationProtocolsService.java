@@ -26,7 +26,7 @@ public class RegistrationProtocolsService {
     public void createRegistrationProtocol(RegistrationProtocolBean bean) {
         RegistrationProtocol.create(bean.getCode(), bean.getDescription(), bean.getEnrolmentByStudentAllowed(),
                 bean.getPayGratuity(), bean.getAllowsIDCard(), bean.getOnlyAllowedDegreeEnrolment(), bean.getAlien(),
-                bean.getExempted(), bean.getMobility(), bean.getMilitary(), bean.getAllowDissertationCandidacyWithoutChecks(),
+                bean.getExempted(), bean.getMobility(), bean.getMilitary(),
                 bean.getForOfficialMobilityReporting(), bean.getAttemptAlmaMatterFromPrecedent());
     }
 
@@ -34,8 +34,8 @@ public class RegistrationProtocolsService {
     public void editRegistrationProtocol(RegistrationProtocol rp, RegistrationProtocolBean bean) {
         rp.edit(bean.getCode(), bean.getDescription(), bean.getEnrolmentByStudentAllowed(),
                 bean.getPayGratuity(), bean.getAllowsIDCard(), bean.getOnlyAllowedDegreeEnrolment(), bean.getAlien(),
-                bean.getExempted(), bean.getMobility(), bean.getMilitary(), bean.getAllowDissertationCandidacyWithoutChecks(),
-                bean.getForOfficialMobilityReporting(), bean.getAttemptAlmaMatterFromPrecedent());
+                bean.getExempted(), bean.getMobility(), bean.getMilitary(), bean.getForOfficialMobilityReporting(),
+                bean.getAttemptAlmaMatterFromPrecedent());
     }
 
 }

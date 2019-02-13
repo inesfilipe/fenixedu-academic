@@ -74,10 +74,6 @@ ${portal.toolkit()}
             <form:checkbox path="military" value="${bean.military}" />
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.allowDissertationCandidacyNoChecks"/></label>
-            <form:checkbox path="allowDissertationCandidacyWithoutChecks" value="${bean.allowDissertationCandidacyWithoutChecks}" />
-        </div>
-        <div class="form-group">
             <label class="col-sm-3 control-label"><spring:message code="label.registrationProtocol.forOfficialMobilityReporting"/></label>
             <form:checkbox path="forOfficialMobilityReporting" value="${bean.forOfficialMobilityReporting}" />
         </div>

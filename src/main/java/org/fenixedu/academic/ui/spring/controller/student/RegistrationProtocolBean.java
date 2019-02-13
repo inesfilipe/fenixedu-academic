@@ -14,7 +14,6 @@ public class RegistrationProtocolBean {
     private boolean exempted;
     private boolean mobility;
     private boolean military;
-    private boolean allowDissertationCandidacyWithoutChecks;
     private boolean forOfficialMobilityReporting;
     private boolean attemptAlmaMatterFromPrecedent;
 
@@ -56,10 +55,6 @@ public class RegistrationProtocolBean {
 
     public boolean getMilitary() {
         return military;
-    }
-
-    public boolean getAllowDissertationCandidacyWithoutChecks() {
-        return allowDissertationCandidacyWithoutChecks;
     }
 
     public boolean getForOfficialMobilityReporting() {
@@ -108,10 +103,6 @@ public class RegistrationProtocolBean {
 
     public void setMilitary(boolean military) {
         this.military = military;
-    }
-
-    public void setAllowDissertationCandidacyWithoutChecks(boolean allowDissertationCandidacyWithoutChecks) {
-        this.allowDissertationCandidacyWithoutChecks = allowDissertationCandidacyWithoutChecks;
     }
 
     public void setForOfficialMobilityReporting(boolean forOfficialMobilityReporting) {

@@ -3088,7 +3088,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         Boolean exempted;
         Boolean mobility;
         Boolean military;
-        Boolean allowDissertationCandidacyWithoutChecks;
+//        Boolean allowDissertationCandidacyWithoutChecks;
         Boolean forOfficialMobilityReporting; // RAIDES
         Boolean attemptAlmaMatterFromPrecedent; // Spooky... but maintaining the logic
 

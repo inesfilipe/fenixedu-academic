@@ -41,19 +41,19 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdIndividualProgramProcess process, Group targetGroup, LocalizedString subject,
-            LocalizedString body, Boolean sendMail, LocalDate fireDate, Boolean userDefined, Boolean shared) {
+            LocalizedString body, Boolean sendMail, String otherRecipientsEmails, LocalDate fireDate, Boolean userDefined, Boolean shared) {
         this();
-        init(process, targetGroup, subject, body, sendMail, fireDate, userDefined, shared);
+        init(process, targetGroup, subject, body, sendMail, otherRecipientsEmails, fireDate, userDefined, shared);
     }
 
     public PhdCustomAlert(PhdCustomAlertBean bean) {
         this(bean.getProcess(), bean.calculateTargetGroup(), new LocalizedString(Locale.getDefault(), bean.getSubject()),
-                new LocalizedString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(), bean.getFireDate(), bean
+                new LocalizedString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(), bean.getOtherRecipientsEmails(), bean.getFireDate(), bean
                         .getUserDefined(), bean.getShared());
     }
 
     protected void init(PhdIndividualProgramProcess process, Group targetGroup, LocalizedString subject,
-            LocalizedString body, Boolean sendEmail, LocalDate whenToFire, Boolean userDefined, Boolean shared) {
+            LocalizedString body, Boolean sendEmail, String otherRecipientsEmails, LocalDate whenToFire, Boolean userDefined, Boolean shared) {
 
         super.init(process, subject, body);
         String[] args = {};
@@ -82,6 +82,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
         super.setWhenToFire(whenToFire);
         super.setSendEmail(sendEmail);
+        super.setOtherRecipientsEmails(otherRecipientsEmails);
         super.setTargetGroup(targetGroup.toPersistentGroup());
         super.setUserDefined(userDefined);
         super.setShared(shared);

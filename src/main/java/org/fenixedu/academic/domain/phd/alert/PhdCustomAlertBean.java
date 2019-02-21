@@ -41,7 +41,7 @@ public class PhdCustomAlertBean implements Serializable {
      */
     private static final long serialVersionUID = -3274906509546432695L;
 
-    private PhdAlertTargetGroupType targetGroupType = PhdAlertTargetGroupType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS;
+    private PhdAlertTargetGroupType targetGroupType = PhdAlertTargetGroupType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS; //by default, since ONLY_FOR_ME group has been deleted
 
     private String subject;
 

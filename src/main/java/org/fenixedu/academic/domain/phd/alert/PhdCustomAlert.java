@@ -32,6 +32,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.domain.MessagingSystem;
 import org.joda.time.LocalDate;
 
 public class PhdCustomAlert extends PhdCustomAlert_Base {
@@ -131,6 +132,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
         if (isToSendMail()) {
             Message.from(getSender()).to(getTargetAccessGroup())
+                    .singleBcc(MessagingSystem.Util.toEmailSet(getOtherRecipientsEmails()))
                     .subject(buildMailSubject()).textBody(buildMailBody())
                     .send();
         }

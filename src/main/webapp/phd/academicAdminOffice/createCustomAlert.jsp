@@ -25,6 +25,23 @@
 
 <html:xhtml/>
 
+<script type='text/javascript'>
+
+    $(document).ready(function() {
+
+        $("input[id$=\":otherRecipientsEmails\"]").prop({'type': 'email', 'multiple': 'multiple'});
+
+        $("input[id$=\":toSendEmail\"]").change(function() {
+        	var emails = $("input[id$=\":otherRecipientsEmails\"]");
+        	this.checked ? emails.removeAttr('disabled') : emails.prop('disabled', true).val();
+        });
+
+        $("input[id$=\":toSendEmail\"]").trigger("change");
+
+    });
+
+</script>
+
 <bean:define id="processId" name="process" property="externalId" />
 
 

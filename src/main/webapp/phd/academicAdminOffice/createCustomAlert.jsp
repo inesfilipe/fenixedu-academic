@@ -33,7 +33,13 @@
 
         $("input[id$=\":toSendEmail\"]").change(function() {
         	var emails = $("input[id$=\":otherRecipientsEmails\"]");
-        	this.checked ? emails.removeAttr('disabled') : emails.prop('disabled', true).val();
+        	if(this.checked) {
+				emails.removeAttr('disabled');
+			}
+        	else {
+				emails.prop('disabled', true);
+				emails.val('');
+			}
         });
 
         $("input[id$=\":toSendEmail\"]").trigger("change");

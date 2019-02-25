@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.phd.alert;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -146,6 +147,14 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         targetGroup.getMembers().forEach(
                 user -> builder.append(user.getPerson().getName()).append(" (")
                         .append(user.getPerson().getEmailForSendingEmails()).append(")\n"));
+        return builder.toString();
+    }
+
+    public String getOtherRecipientsInFormattedText() {
+        StringBuilder builder = new StringBuilder();
+
+        Arrays.stream(getOtherRecipientsEmails().split(",")).forEach(
+                email -> builder.append(email.trim()).append("\n"));
         return builder.toString();
     }
 

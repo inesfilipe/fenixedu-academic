@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -34,11 +31,13 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.period.CandidacyPeriod;
+import org.fenixedu.academic.domain.period.CandidacyPeriod_Base;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -72,21 +71,6 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-
-        OutboundMobilityCandidacyPeriod last = null;
-        for (final CandidacyPeriod candidacyPeriod : executionYear.getCandidacyPeriodsSet()) {
-            if (candidacyPeriod instanceof OutboundMobilityCandidacyPeriod) {
-                final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod =
-                        (OutboundMobilityCandidacyPeriod) candidacyPeriod;
-                if (last == null || last.getStart().isBefore(outboundMobilityCandidacyPeriod.getStart())) {
-                    last = outboundMobilityCandidacyPeriod;
-                }
-            }
-        }
-        if (last != null) {
-            candidacyPeriods.add(last);
-            // mobilityGroups.addAll(last.getOutboundMobilityCandidacyContestGroupSet());
-        }
     }
 
     public OutboundMobilityContextBean(OutboundMobilityContextBean bean) {
@@ -105,9 +89,16 @@ public class OutboundMobilityContextBean implements Serializable {
     public void setExecutionYear(final ExecutionYear executionYear) {
         if (executionYear != this.executionYear) {
             this.executionYear = executionYear;
-            candidacyPeriods.clear();
-            getPossibleCandidacyPeriods(candidacyPeriods);
+            selectLastOpenedCandidacyPeriod();
         }
+    }
+
+    private void selectLastOpenedCandidacyPeriod() {
+        this.candidacyPeriods.clear();
+        this.executionYear.getCandidacyPeriodsSet().stream()
+                .filter(CandidacyPeriod::isOutboundMobilityCandidacyPeriod)
+                .max(p -> p.getStart().isBeforeNow())
+        });
     }
 
     public void getPossibleCandidacyPeriods(final SortedSet<OutboundMobilityCandidacyPeriod> candidacyPeriods) {

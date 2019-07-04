@@ -286,6 +286,18 @@ public enum SchoolLevelType implements IPresentableEnum {
 
     }
 
+    static public List<SchoolLevelType> getTypesForStudentWithPortugueseDegree() {
+        final List<SchoolLevelType> result = new ArrayList<>();
+
+        for (final SchoolLevelType each : values()) {
+            if (!each.getName().equals(OTHER.getName())) {
+                result.add(each);
+            }
+        }
+
+        return result;
+    }
+
     static public List<SchoolLevelType> getTypesForMobilityStudent() {
         final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
 

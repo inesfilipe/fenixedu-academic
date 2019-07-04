@@ -87,10 +87,32 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
         return mapping.findForward("editCandidacyInformation");
     }
 
+    public ActionForward countryOfResidencePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                             HttpServletResponse response) {
+        final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        RenderUtils.invalidateViewState("personalInformationBean.editPrecedentDegreeInformation");
+        RenderUtils.invalidateViewState("personalInformationBean.editPersonalInformation");
+        personalInformationBean.resetDistrictSubdivisionOfResidence();
+        request.setAttribute("personalInformationBean", personalInformationBean);
+
+        return mapping.findForward("editCandidacyInformation");
+    }
+
+    public ActionForward grantOwnerTypePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                                    HttpServletResponse response) {
+        final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        RenderUtils.invalidateViewState("personalInformationBean.editPrecedentDegreeInformation");
+        RenderUtils.invalidateViewState("personalInformationBean.editPersonalInformation");
+        personalInformationBean.resetGrantOwnerProvider();
+        request.setAttribute("personalInformationBean", personalInformationBean);
+
+        return mapping.findForward("editCandidacyInformation");
+    }
+
     public ActionForward prepareEditInstitutionPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");W
         personalInformationBean.resetDegree();
         RenderUtils.invalidateViewState();
         request.setAttribute("personalInformationBean", personalInformationBean);

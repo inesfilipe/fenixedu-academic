@@ -112,7 +112,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
     public ActionForward prepareEditInstitutionPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");W
+        PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
         personalInformationBean.resetDegree();
         RenderUtils.invalidateViewState();
         request.setAttribute("personalInformationBean", personalInformationBean);

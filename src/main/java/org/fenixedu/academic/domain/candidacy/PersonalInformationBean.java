@@ -630,7 +630,7 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isGrantProviderAnotherInstitution() { return getGrantOwnerType() != null && !getGrantOwnerType().getName().equals(STUDENT_WITHOUT_SCHOLARSHIP.getName()); }
 
-    public boolean isSchoolLevelOther() { return getSchoolLevel() != null && getSchoolLevel().getName().equals(OTHER_SITUATION.getName()); }
+    public boolean isSchoolLevelOther() { return getSchoolLevel() != null && getSchoolLevel().isOther(); }
 
     public boolean isMaritalStatusValid() {
         return hasMaritalStatus() && getMaritalStatus() != MaritalStatus.UNKNOWN;
@@ -723,9 +723,6 @@ public class PersonalInformationBean implements Serializable {
 
     public void resetDistrictSubdivisionOfResidence() {
         setDistrictSubdivisionOfResidence(null);
-        //TODO
-//        if(!getCountryOfResidence().getCode().equals("PT"))
-//            setDislocatedFromPermanentResidence(true);
     }
 
     public void resetGrantOwnerProvider() {

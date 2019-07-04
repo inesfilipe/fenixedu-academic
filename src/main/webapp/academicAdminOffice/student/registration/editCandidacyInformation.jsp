@@ -146,7 +146,7 @@
 		<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
 			<fr:schema type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="format" value="${name}"/>
+					<fr:property name="format" value="${localizedName.content}"/>
 					<fr:property name="sortBy" value="name=asc" />
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="schoolLevelPostback" />
@@ -160,7 +160,7 @@
 				<% } %>
 				<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
 					<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-						<fr:property name="format" value="${localizedName}"/>
+						<fr:property name="format" value="${localizedName.content}"/>
 						<fr:property name="sortBy" value="name=asc" />
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					</fr:slot>

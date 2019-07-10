@@ -287,7 +287,7 @@ public enum SchoolLevelType implements IPresentableEnum {
 
     }
 
-    static public List<SchoolLevelType> getTypesForStudentWithPortugueseDegree() {
+    static public List<SchoolLevelType> getTypesForStudentMinusOther() {
         return getTypesForStudent().stream().filter(l -> !l.isOther())
                 .collect(Collectors.toList());
     }

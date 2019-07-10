@@ -55,7 +55,7 @@
 
 <div class="infoop2 mtop2">
 	<strong>
-		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
+		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%="https://graduacao.tecnico.ulisboa.pt/inqueritos"%>" arg1="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
 	</strong>	
 </div>
 
@@ -192,7 +192,7 @@
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				<fr:property name="destination" value="countryOfResidencePostback" />
 			</fr:slot>
-			<% if (personalInformationBean.isCountryOfResidencePortugal()) { %>
+			<% if (personalInformationBean.isCountryOfResidenceDefaultCountry()) { %>
 				<fr:slot name="districtSubdivisionOfResidence" layout="autoComplete">
 					<fr:property name="size" value="50"/>
 					<fr:property name="format" value="${name} - (${district.name})"/>

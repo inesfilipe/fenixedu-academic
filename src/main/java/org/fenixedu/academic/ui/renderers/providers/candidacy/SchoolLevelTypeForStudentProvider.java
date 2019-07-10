@@ -36,8 +36,8 @@ public class SchoolLevelTypeForStudentProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         final PersonalInformationBean bean = (PersonalInformationBean) source;
 
-        if(bean.getCountryWhereFinishedPreviousCompleteDegree().getName().equals("PORTUGAL")) {
-            return SchoolLevelType.getTypesForStudentWithPortugueseDegree();
+        if(bean.isCountryWhereFinishedPreviousCompleteDegreeDefaultCountry()) {
+            return SchoolLevelType.getTypesForStudentMinusOther();
         }
         return SchoolLevelType.getTypesForStudent();
     }

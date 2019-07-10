@@ -63,7 +63,7 @@
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="countryOfResidencePostback" />
 				</fr:slot>
-				<% if (personalInformationBean.isCountryOfResidencePortugal()) { %>
+				<% if (personalInformationBean.isCountryOfResidenceDefaultCountry()) { %>
 					<fr:slot name="districtSubdivisionOfResidence" layout="autoComplete">
 						<fr:property name="size" value="50"/>
 						<fr:property name="format" value="${name} - (${district.name})"/>

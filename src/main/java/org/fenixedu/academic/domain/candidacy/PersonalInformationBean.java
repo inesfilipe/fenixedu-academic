@@ -626,7 +626,9 @@ public class PersonalInformationBean implements Serializable {
         return false;
     }
 
-    public boolean isCountryOfResidencePortugal() { return getCountryOfResidence() != null && getCountryOfResidence().getName().equals("PORTUGAL"); }
+    public boolean isCountryOfResidenceDefaultCountry() { return getCountryOfResidence() != null && getCountryOfResidence().isDefaultCountry(); }
+
+    public boolean isCountryWhereFinishedPreviousCompleteDegreeDefaultCountry() { return getCountryWhereFinishedPreviousCompleteDegree() != null && getCountryWhereFinishedPreviousCompleteDegree().isDefaultCountry(); }
 
     public boolean isGrantProviderAnotherInstitution() { return getGrantOwnerType() != null && !getGrantOwnerType().getName().equals(STUDENT_WITHOUT_SCHOLARSHIP.getName()); }
 

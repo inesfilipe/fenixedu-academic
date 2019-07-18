@@ -52,6 +52,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
 
         printUnitsNotInSystem(unitsNotInSystem);
         printUnitsWithDifferentName(unitsWhoseNamesDontMatch);
+        //FIXME: degree can belong to more than one unit - code is not "unique"
         printDegreesNotInSystem(degreesNotInSystem);
         printDegreesWithDifferentDescription(degreesWhoseNamesDontMatch);
     }

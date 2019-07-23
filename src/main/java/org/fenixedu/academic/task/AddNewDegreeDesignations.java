@@ -18,23 +18,28 @@ public class AddNewDegreeDesignations extends CustomTask {
 
     @Override
     public void runTask() throws Exception {
-        List<String> unitsCodes = getUnitsCodes();
-        List<String> degreeDesignationsCodes = getDegreeDesignationsCodes();
+        List<DegreeDesignation> degreeDesignations = getDegreeDesignationsWithCode();
         List<String> tecnicoCodes = Arrays.asList("0807", "0808", "1518", "1519");
 
         URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
         BufferedReader br = getReaderFromURL(csvURL);
-
         String line = br.readLine(); // excluding header from analysis
         taskLog(line); //for my own reference - will probably delete later
         taskLog();
 
-        Set<List<String>> newSet = parseFile(br);
+        while((line = br.readLine()) != null) {
+            final List<String> data = parseLine(line);
 
+            if(!tecnicoCodes.contains(data.get(1))) {
+                if(degreeDesignations.stream().noneMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)))) {
+                    createDegreeNotInSystem(data);
+                }
+                else {
+                    updateDegreeName(data);
+                }
+            }
+        }
         //FIXME: degree can belong to more than one unit - code is not "unique"
-        taskLog("Degrees not in the system:");
-        newSet.stream().filter(l -> unitsCodes.contains(l.get(1)) && !tecnicoCodes.contains(l.get(1)) && !degreeDesignationsCodes.contains(l.get(3))).forEach(this::createDegreeNotInSystem);
-        taskLog();
     }
 
     private void createDegreeNotInSystem(List<String> degree) {
@@ -44,8 +49,15 @@ public class AddNewDegreeDesignations extends CustomTask {
         }
 
         taskLog(degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
-        Unit.readAllUnits().stream().filter(u -> u.getCode() != null && u.getCode().equals(degree.get(1))).findFirst()
-                .ifPresent(u -> u.addDegreeDesignation(new DegreeDesignation(degree.get(3), degree.get(4), getDegreeClassificationFromName(degree.get(0)))));
+        Unit.readAllUnits().stream().filter(u -> u.getCode() != null && isUnitWithSameCode(u, degree.get(1))).findFirst().ifPresent(unit -> {
+            DegreeDesignation degreeDesignation = Bennu.getInstance().getDegreeDesignationsSet().stream()
+                    .filter(d -> d.getCode().equals(degree.get(3))).findFirst().orElse(new DegreeDesignation(degree.get(3), degree.get(4), getDegreeClassificationFromName(degree.get(0))));
+            unit.addDegreeDesignation(degreeDesignation);
+        });
+    }
+
+    private void updateDegreeName(List<String> degree) {
+
     }
 
     //FIXME: DegreeClassification table has to be updated
@@ -110,33 +122,24 @@ public class AddNewDegreeDesignations extends CustomTask {
         }
     }
 
-    //make sure that there are no duplicates (for the purpose of this script, there are currently no duplicates that will affect it)
-    private List<String> getUnitsCodes() {
-        return Unit.readAllUnits().stream().filter(u -> u.getCode() != null && !u.getCode().isEmpty()).map(Unit::getCode).collect(
-                Collectors.toList());
+    private boolean isUnitWithSameCode(Unit unit, String code) {
+        return code.equals(unit.getCode());
     }
 
-    private List<String> getDegreeDesignationsCodes() {
+    private boolean isDegreeWithSameCodeAndUnit(DegreeDesignation degree, String code, String unitCode) {
+        return code.equals(degree.getCode()) && degree.getInstitutionUnitSet().stream()
+                .anyMatch(u -> unitCode.equals(u.getCode()));
+    }
+
+    private List<DegreeDesignation> getDegreeDesignationsWithCode() {
         return Bennu.getInstance().getDegreeDesignationsSet().stream()
-                .filter(d -> d.getCode() != null && !d.getCode().isEmpty()).map(DegreeDesignation::getCode).collect(Collectors.toList());
+                .filter(d -> d.getCode() != null && !d.getCode().isEmpty()).collect(Collectors.toList());
     }
 
     private BufferedReader getReaderFromURL(URL url) throws IOException {
         URLConnection urlConn = url.openConnection();
         InputStreamReader input = new InputStreamReader(urlConn.getInputStream());
         return new BufferedReader(input);
-    }
-
-    private Set<List<String>> parseFile(BufferedReader br) throws IOException {
-        String line;
-        Set<List<String>> set = new HashSet<>();
-
-        while((line = br.readLine()) != null) {
-            final List<String> data = parseLine(line);
-            set.add(data);
-        }
-
-        return set;
     }
 
     //assumes separator is a comma and that there are no quotes inside a column

@@ -27,34 +27,47 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
 
         URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
         BufferedReader br = getReaderFromURL(csvURL);
-
         String line = br.readLine(); // excluding header from analysis
-        taskLog(line); //for my own reference - will probably delete later
-        taskLog();
 
         while((line = br.readLine()) != null) {
             final List<String> data = parseLine(line);
 
-            if(units.stream().noneMatch(u -> u.getCode().equals(data.get(1)))) {
+            if(units.stream().noneMatch(u -> isUnitWithSameCode(u, data.get(1)))) {
                 unitsNotInSystem.add(data.subList(1,3));
             }
 
-            units.stream().filter(u -> u.getCode().equals(data.get(1)) && !u.getName().equals(data.get(2)))
+            units.stream().filter(u -> isUnitWithSameCode(u, data.get(1)) && unitNameDoesNotMatch(u, data.get(2)))
                     .forEach(u -> unitsWhoseNamesDontMatch.add(Arrays.asList(u.getCode(), u.getName(), data.get(2))));
 
-            if(degreeDesignations.stream().noneMatch(d -> d.getCode().equals(data.get(3)))) {
+            if(degreeDesignations.stream().noneMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)))) {
                 degreesNotInSystem.add(data);
             }
 
-            degreeDesignations.stream().filter(d -> d.getCode().equals(data.get(3)) && !d.getDescription().equals(data.get(4)))
+            degreeDesignations.stream().filter(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)) && degreeDescriptionDoesNotMatch(d, data.get(4)))
                     .forEach(d -> degreesWhoseNamesDontMatch.add(Arrays.asList(d.getCode(), d.getDescription(), data.get(4))));
         }
 
         printUnitsNotInSystem(unitsNotInSystem);
         printUnitsWithDifferentName(unitsWhoseNamesDontMatch);
-        //FIXME: degree can belong to more than one unit - code is not "unique"
         printDegreesNotInSystem(degreesNotInSystem);
         printDegreesWithDifferentDescription(degreesWhoseNamesDontMatch);
+    }
+
+    private boolean isUnitWithSameCode(Unit unit, String code) {
+        return code.equals(unit.getCode());
+    }
+
+    private boolean unitNameDoesNotMatch(Unit unit, String name) {
+        return !name.equals(unit.getName());
+    }
+
+    private boolean isDegreeWithSameCodeAndUnit(DegreeDesignation degree, String code, String unitCode) {
+        return code.equals(degree.getCode()) && degree.getInstitutionUnitSet().stream()
+                .anyMatch(u -> unitCode.equals(u.getCode()));
+    }
+
+    private boolean degreeDescriptionDoesNotMatch(DegreeDesignation degree, String description) {
+        return !description.equals(degree.getDescription());
     }
 
     private List<Unit> getUnitsWithCode() {

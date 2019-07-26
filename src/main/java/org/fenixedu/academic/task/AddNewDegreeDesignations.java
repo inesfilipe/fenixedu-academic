@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddNewDegreeDesignations extends CustomTask {
+    
+    private List<List<String>> createdDegrees = new ArrayList<>();
+    private List<List<String>> erroredDegrees = new ArrayList<>();
+    private List<List<String>> updatedDegrees = new ArrayList<>();
 
     @Override
     public void runTask() throws Exception {
@@ -26,8 +30,6 @@ public class AddNewDegreeDesignations extends CustomTask {
         URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
         BufferedReader br = getReaderFromURL(csvURL);
         String line = br.readLine(); // excluding header from analysis
-        taskLog(line); //for my own reference - will probably delete later
-        taskLog();
 
         while((line = br.readLine()) != null) {
             final List<String> data = parseLine(line);
@@ -46,21 +48,46 @@ public class AddNewDegreeDesignations extends CustomTask {
 
     private void addDegreeToSystem(List<String> degree) {
         if(getDegreeClassificationFromName(degree.get(0)) == null) {
-            taskLog("ERROR - cannot add: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
+            erroredDegrees.add(degree);
             return;
         }
 
-        taskLog("CREATE: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
         getUnitsWithCode().stream().filter(u -> isUnitWithSameCode(u, degree.get(1))).findFirst().ifPresent(unit -> {
             DegreeDesignation degreeDesignation = getDegreeDesignationsWithCode().stream()
                     .filter(d -> degree.get(3).equals(d.getCode())).findFirst().orElseGet(() -> new DegreeDesignation(degree.get(3), degree.get(4), getDegreeClassificationFromName(degree.get(0))));
             unit.addDegreeDesignation(degreeDesignation);
+            createdDegrees.add(degree);
         });
+
     }
 
     private void updateDegreeName(List<String> degree) {
-        taskLog("UPDATE: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
         getDegreeDesignationsWithCode().stream().filter(d -> isDegreeWithSameCodeAndUnit(d, degree.get(3), degree.get(1))).findFirst().ifPresent(d -> d.setDescription(degree.get(4)));
+        updatedDegrees.add(degree);
+    }
+
+    private void printErroredDegrees(List<List<String>> erroredDegrees) {
+        taskLog("Error creating the following degrees:");
+        printErroredDegrees(erroredDegrees);
+        taskLog();
+    }
+
+    private void printCreatedDegrees(List<List<String>> createdDegrees) {
+        taskLog("Created the following degrees:");
+        printCreatedDegrees(createdDegrees);
+        taskLog();
+    }
+
+    private void printUpdatedDegrees(List<List<String>> updatedDegrees) {
+        taskLog("Created the following degrees:");
+        printDegrees(updatedDegrees);
+        taskLog();
+    }
+
+    private void printDegrees(List<List<String>> degrees) {
+        for(List<String> d : degrees) {
+            taskLog(d.get(0) + " — " + d.get(1) + " : " + d.get(2) + " — " + d.get(3) + " : " + d.get(4));
+        }
     }
 
     //FIXME: DegreeClassification table has to be updated

@@ -11,17 +11,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddNewDegreeDesignations extends CustomTask {
 
     @Override
     public void runTask() throws Exception {
-        List<DegreeDesignation> degreeDesignations = getDegreeDesignationsWithCode();
+        List<DegreeDesignation> degreeDesignations;
         List<String> tecnicoCodes = Arrays.asList("0807", "0808", "1518", "1519");
 
-        URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
+        URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/48e0b4830e86f438a478882c0e49d1a9/raw/08a26ca99a07a6fbdbd8a27ccb0d6f70cfe24c28/pa03.csv");
         BufferedReader br = getReaderFromURL(csvURL);
         String line = br.readLine(); // excluding header from analysis
         taskLog(line); //for my own reference - will probably delete later
@@ -30,34 +32,35 @@ public class AddNewDegreeDesignations extends CustomTask {
         while((line = br.readLine()) != null) {
             final List<String> data = parseLine(line);
 
+            degreeDesignations = getDegreeDesignationsWithCode();
             if(!tecnicoCodes.contains(data.get(1))) {
                 if(degreeDesignations.stream().noneMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)))) {
-                    createDegreeNotInSystem(data);
+                    addDegreeToSystem(data);
                 }
-                else {
+                else if(degreeDesignations.stream().anyMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)) && !data.get(4).equals(d.getDescription()))) {
                     updateDegreeName(data);
                 }
             }
         }
-        //FIXME: degree can belong to more than one unit - code is not "unique"
     }
 
-    private void createDegreeNotInSystem(List<String> degree) {
+    private void addDegreeToSystem(List<String> degree) {
         if(getDegreeClassificationFromName(degree.get(0)) == null) {
             taskLog("ERROR - cannot add: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
             return;
         }
 
-        taskLog(degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
-        Unit.readAllUnits().stream().filter(u -> u.getCode() != null && isUnitWithSameCode(u, degree.get(1))).findFirst().ifPresent(unit -> {
-            DegreeDesignation degreeDesignation = Bennu.getInstance().getDegreeDesignationsSet().stream()
-                    .filter(d -> d.getCode().equals(degree.get(3))).findFirst().orElse(new DegreeDesignation(degree.get(3), degree.get(4), getDegreeClassificationFromName(degree.get(0))));
+        taskLog("CREATE: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
+        getUnitsWithCode().stream().filter(u -> isUnitWithSameCode(u, degree.get(1))).findFirst().ifPresent(unit -> {
+            DegreeDesignation degreeDesignation = getDegreeDesignationsWithCode().stream()
+                    .filter(d -> degree.get(3).equals(d.getCode())).findFirst().orElseGet(() -> new DegreeDesignation(degree.get(3), degree.get(4), getDegreeClassificationFromName(degree.get(0))));
             unit.addDegreeDesignation(degreeDesignation);
         });
     }
 
     private void updateDegreeName(List<String> degree) {
-
+        taskLog("UPDATE: " + degree.get(0) + " — " + degree.get(1) + " : " + degree.get(2) + " — " + degree.get(3) + " : " + degree.get(4));
+        getDegreeDesignationsWithCode().stream().filter(d -> isDegreeWithSameCodeAndUnit(d, degree.get(3), degree.get(1))).findFirst().ifPresent(d -> d.setDescription(degree.get(4)));
     }
 
     //FIXME: DegreeClassification table has to be updated
@@ -122,6 +125,16 @@ public class AddNewDegreeDesignations extends CustomTask {
         }
     }
 
+    private List<Unit> getUnitsWithCode() {
+        return Unit.readAllUnits().stream().filter(u -> u.getCode() != null && !u.getCode().isEmpty()).collect(
+                Collectors.toList());
+    }
+
+    private List<DegreeDesignation> getDegreeDesignationsWithCode() {
+        return Bennu.getInstance().getDegreeDesignationsSet().stream()
+                .filter(d -> d.getCode() != null && !d.getCode().isEmpty()).collect(Collectors.toList());
+    }
+
     private boolean isUnitWithSameCode(Unit unit, String code) {
         return code.equals(unit.getCode());
     }
@@ -129,11 +142,6 @@ public class AddNewDegreeDesignations extends CustomTask {
     private boolean isDegreeWithSameCodeAndUnit(DegreeDesignation degree, String code, String unitCode) {
         return code.equals(degree.getCode()) && degree.getInstitutionUnitSet().stream()
                 .anyMatch(u -> unitCode.equals(u.getCode()));
-    }
-
-    private List<DegreeDesignation> getDegreeDesignationsWithCode() {
-        return Bennu.getInstance().getDegreeDesignationsSet().stream()
-                .filter(d -> d.getCode() != null && !d.getCode().isEmpty()).collect(Collectors.toList());
     }
 
     private BufferedReader getReaderFromURL(URL url) throws IOException {

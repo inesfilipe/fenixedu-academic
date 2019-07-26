@@ -23,7 +23,7 @@ public class AddNewDegreeDesignations extends CustomTask {
         List<DegreeDesignation> degreeDesignations;
         List<String> tecnicoCodes = Arrays.asList("0807", "0808", "1518", "1519");
 
-        URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/48e0b4830e86f438a478882c0e49d1a9/raw/08a26ca99a07a6fbdbd8a27ccb0d6f70cfe24c28/pa03.csv");
+        URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
         BufferedReader br = getReaderFromURL(csvURL);
         String line = br.readLine(); // excluding header from analysis
         taskLog(line); //for my own reference - will probably delete later

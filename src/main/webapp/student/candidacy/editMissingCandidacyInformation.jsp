@@ -55,7 +55,7 @@
 
 <div class="infoop2 mtop2">
 	<strong>
-		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%="https://graduacao.tecnico.ulisboa.pt/inqueritos"%>" arg1="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
+		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
 	</strong>	
 </div>
 

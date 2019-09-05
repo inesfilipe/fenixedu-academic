@@ -44,6 +44,10 @@ public class AddNewDegreeDesignations extends CustomTask {
                 }
             }
         }
+
+        printErroredDegrees(erroredDegrees);
+        printCreatedDegrees(createdDegrees);
+        printUpdatedDegrees(updatedDegrees);
     }
 
     private void addDegreeToSystem(List<String> degree) {
@@ -67,19 +71,19 @@ public class AddNewDegreeDesignations extends CustomTask {
     }
 
     private void printErroredDegrees(List<List<String>> erroredDegrees) {
-        taskLog("Error creating the following degrees:");
-        printErroredDegrees(erroredDegrees);
+        taskLog("Error creating the following degrees: " + erroredDegrees.size());
+        printDegrees(erroredDegrees);
         taskLog();
     }
 
     private void printCreatedDegrees(List<List<String>> createdDegrees) {
-        taskLog("Created the following degrees:");
-        printCreatedDegrees(createdDegrees);
+        taskLog("Created the following degrees: " + createdDegrees.size());
+        printDegrees(createdDegrees);
         taskLog();
     }
 
     private void printUpdatedDegrees(List<List<String>> updatedDegrees) {
-        taskLog("Created the following degrees:");
+        taskLog("Updated the following degrees: " + updatedDegrees.size());
         printDegrees(updatedDegrees);
         taskLog();
     }
@@ -93,62 +97,62 @@ public class AddNewDegreeDesignations extends CustomTask {
     //FIXME: DegreeClassification table has to be updated
     private DegreeClassification getDegreeClassificationFromName(String name) {
         switch(name) {
-            case "Licenciatura bietápica":
-                return DegreeClassification.readByCode("LB");
-            case "Licenciatura 1.º ciclo":
-                return DegreeClassification.readByCode("L1");
-            case "Mestrado 2.º ciclo":
-                return DegreeClassification.readByCode("M2");
-            case "Licenciatura":
-                return DegreeClassification.readByCode("L");
-            case "Doutoramento 3.º ciclo":
-                return DegreeClassification.readByCode("D3");
-            case "Especialização pós-licenciatura":
-                return DegreeClassification.readByCode("E");
-            case "Bacharelato":
-                return DegreeClassification.readByCode("B");
-            case "Diploma de estudos superiores especializados":
-                return DegreeClassification.readByCode("DE");
-            case "Mestrado":
-                return DegreeClassification.readByCode("M");
-            case "Complemento de formação":
-                return DegreeClassification.readByCode("CF");
-            case "Bacharelato/Licenciatura":
-                return DegreeClassification.readByCode("BL");
-            case "Curso técnico superior profissional":
-                return null; //doesn't exist
-            case "Licenciatura terminal":
-                return DegreeClassification.readByCode("LT");
-            case "Curso de especialização tecnológica":
-                return null; //file doesn't specify which code ("duplicated" name)
-            case "Doutoramento":
-                return DegreeClassification.readByCode("D");
-            case "Licenciatura de mestrado integrado":
-                return DegreeClassification.readByCode("LI");
-            case "Qualificação para o exercício de outras funções educativas":
-                return DegreeClassification.readByCode("QE");
-            case "Especialização pós-bacharelato":
-                return DegreeClassification.readByCode("GB");
-            case "Mestrado integrado":
-                return DegreeClassification.readByCode("MI");
-            case "Bacharelato em ensino + licenciatura em ensino":
-                return DegreeClassification.readByCode("PB");
-            case "Outros cursos de compl de form para prof do Ens Básico e Sec":
-                return DegreeClassification.readByCode("OC");
-            case "Preparatórios de mestrado integrado":
-                return DegreeClassification.readByCode("PM");
-            case "Preparatórios de licenciatura":
-                return DegreeClassification.readByCode("P");
-            case "Mestrado integrado terminal":
-                return DegreeClassification.readByCode("MT");
-            case "Aguarda reconhecimento como licenciatura":
-                return DegreeClassification.readByCode("X");
-            case "Curso superior não conferente de grau":
-                return DegreeClassification.readByCode("A");
-            case "Preparatórios de licenciatura 1.º ciclo":
-                return DegreeClassification.readByCode("PL");
-            default:
-                return null;
+        case "Curso superior não conferente de grau":
+            return DegreeClassification.readByCode("A");
+        case "Bacharelato":
+            return DegreeClassification.readByCode("B");
+        case "Bacharelato/Licenciatura":
+            return DegreeClassification.readByCode("BL");
+        case "Curso de especialização tecnológica":
+            return DegreeClassification.readByCode("C"); //file doesn't specify which code ("duplicated" name) - default to C according to ticket
+        case "Complemento de formação":
+            return DegreeClassification.readByCode("CF");
+        case "Doutoramento":
+            return DegreeClassification.readByCode("D");
+        case "Doutoramento 3.º ciclo":
+            return DegreeClassification.readByCode("D3");
+        case "Diploma de estudos superiores especializados":
+            return DegreeClassification.readByCode("DE");
+        case "Especialização pós-licenciatura":
+            return DegreeClassification.readByCode("E");
+        case "Especialização pós-bacharelato":
+            return DegreeClassification.readByCode("GB");
+        case "Licenciatura":
+            return DegreeClassification.readByCode("L");
+        case "Licenciatura 1.º ciclo":
+            return DegreeClassification.readByCode("L1");
+        case "Licenciatura bietápica":
+            return DegreeClassification.readByCode("LB");
+        case "Licenciatura de mestrado integrado":
+            return DegreeClassification.readByCode("LI");
+        case "Licenciatura terminal":
+            return DegreeClassification.readByCode("LT");
+        case "Mestrado":
+            return DegreeClassification.readByCode("M");
+        case "Mestrado 2.º ciclo":
+            return DegreeClassification.readByCode("M2");
+        case "Mestrado integrado":
+            return DegreeClassification.readByCode("MI");
+        case "Mestrado integrado terminal":
+            return DegreeClassification.readByCode("MT");
+        case "Outros cursos de compl de form para prof do Ens Básico e Sec":
+            return DegreeClassification.readByCode("OC");
+        case "Preparatórios de licenciatura":
+            return DegreeClassification.readByCode("P");
+        case "Bacharelato em ensino + licenciatura em ensino":
+            return DegreeClassification.readByCode("PB");
+        case "Preparatórios de licenciatura 1.º ciclo":
+            return DegreeClassification.readByCode("PL");
+        case "Preparatórios de mestrado integrado":
+            return DegreeClassification.readByCode("PM");
+        case "Qualificação para o exercício de outras funções educativas":
+            return DegreeClassification.readByCode("QE");
+        case "Aguarda reconhecimento como licenciatura":
+            return DegreeClassification.readByCode("X");
+        case "Curso técnico superior profissional":
+            return DegreeClassification.readByCode("T"); //this code doesn't exist!!!
+        default:
+            return null;
         }
     }
 

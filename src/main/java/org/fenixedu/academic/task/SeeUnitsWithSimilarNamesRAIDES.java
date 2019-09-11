@@ -2,6 +2,7 @@ package org.fenixedu.academic.task;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.scheduler.custom.CustomTask;
+import org.fenixedu.commons.StringNormalizer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,15 +38,15 @@ public class SeeUnitsWithSimilarNamesRAIDES extends CustomTask {
             if(allUnits.stream().anyMatch(u -> u.getCode() == null && u.getName().equals(l.get(1)) && u.getUnitName() != null)) {
                 allUnits.stream().filter(u -> u.getCode() == null && u.getName().equals(l.get(1)) && u.getUnitName() != null)
                         .forEach(u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " -- externa: "
-                                + u.getUnitName().getIsExternalUnit().toString() + "no degree: " + u.getDegreeDesignationSet().size()));
+                                + u.getUnitName().getIsExternalUnit().toString() + " no degree: " + u.getDegreeDesignationSet().size()));
             }
             else {
                 String name = l.get(1);
-                List<String> splitted = Arrays.asList(name.split(" ")).stream().map(s -> s.replaceAll("[^a-zA-Z]", "").toLowerCase()).filter(s -> s.length() > 3).collect(Collectors.toList());
+                List<String> splitted = Arrays.asList(name.split(" ")).stream().map(s -> StringNormalizer.normalizeAndRemoveAccents(s.replaceAll("[^a-zA-Z]", "")).toLowerCase()).filter(s -> s.length() > 3).collect(Collectors.toList());
 
-                allUnits.stream().filter(u -> u.getCode() == null && splitted.stream().allMatch(u.getName().toLowerCase()::contains) && u.getUnitName() != null)
+                allUnits.stream().filter(u -> u.getCode() == null && splitted.stream().allMatch(StringNormalizer.normalizeAndRemoveAccents(u.getName()).toLowerCase()::contains) && u.getUnitName() != null)
                         .forEach(u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " -- externa: "
-                                + u.getUnitName().getIsExternalUnit().toString() + "no degree: " + u.getDegreeDesignationSet().size()));
+                                + u.getUnitName().getIsExternalUnit().toString() + " no degree: " + u.getDegreeDesignationSet().size()));
             }
             taskLog();
         }

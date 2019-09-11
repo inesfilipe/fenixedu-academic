@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddNewDegreeDesignations extends CustomTask {
-    
+public class AddNewDegrees extends CustomTask {
     private List<List<String>> createdDegrees = new ArrayList<>();
     private List<List<String>> erroredDegrees = new ArrayList<>();
     private List<List<String>> updatedDegrees = new ArrayList<>();
@@ -90,7 +89,7 @@ public class AddNewDegreeDesignations extends CustomTask {
 
     private void printDegrees(List<List<String>> degrees) {
         for(List<String> d : degrees) {
-            taskLog(d.get(0) + " — " + d.get(1) + " : " + d.get(2) + " — " + d.get(3) + " : " + d.get(4));
+            taskLog(d.get(1) + " : " + d.get(2) + " — " + d.get(0) + " — " + d.get(3) + " : " + d.get(4));
         }
     }
 

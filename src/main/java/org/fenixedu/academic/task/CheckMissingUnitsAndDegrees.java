@@ -44,7 +44,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
             }
 
             degreeDesignations.stream().filter(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)) && degreeDescriptionDoesNotMatch(d, data.get(4)))
-                    .forEach(d -> degreesWhoseNamesDontMatch.add(Arrays.asList(d.getCode(), d.getDescription(), data.get(4))));
+                    .forEach(d -> degreesWhoseNamesDontMatch.add(Arrays.asList(data.get(0), data.get(1), data.get(2), d.getCode(), d.getDescription(), data.get(4))));
         }
 
         printUnitsNotInSystem(unitsNotInSystem);
@@ -83,7 +83,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printUnitsNotInSystem(Set<List<String>> units) {
         taskLog("Units not in the system: " + units.size());
 
-        List<List<String>> sortedUnits = units.stream().sorted(Comparator.comparing(l -> l.get(0))).collect(Collectors.toList());
+        List<List<String>> sortedUnits = sortByUnitCode(units);
 
         for(List<String> l : sortedUnits) {
             taskLog(l.get(0) + " — " + l.get(1));
@@ -95,13 +95,17 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printUnitsWithDifferentName(Set<List<String>> units) {
         taskLog("Units with different name: " + units.size());
 
-        List<List<String>> sortedUnits = units.stream().sorted(Comparator.comparing(l -> l.get(0))).collect(Collectors.toList());
+        List<List<String>> sortedUnits = sortByUnitCode(units);
 
         for(List<String> l : sortedUnits) {
             taskLog(l.get(0) + " — old name: " + l.get(1) + "; new name: " + l.get(2));
         }
 
         taskLog();
+    }
+
+    private List<List<String>> sortByUnitCode(Set<List<String>> set) {
+        return set.stream().sorted(Comparator.comparing(l -> l.get(0))).collect(Collectors.toList());
     }
 
     private void printDegreesNotInSystem(Set<List<String>> degrees) {
@@ -126,6 +130,10 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
         }
 
         taskLog();
+    }
+
+    private List<List<String>> sortByUnitAndDegreesCodes(Set<List<String>> set) {
+        return set.stream().sorted((l1, l2) -> l1.get(1).compareTo(l2.get(1))).collect(Collectors.toList());
     }
 
     private BufferedReader getReaderFromURL(URL url) throws IOException {
@@ -176,4 +184,5 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
 
         return result;
     }
+
 }

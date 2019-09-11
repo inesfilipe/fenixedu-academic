@@ -83,9 +83,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printUnitsNotInSystem(Set<List<String>> units) {
         taskLog("Units not in the system: " + units.size());
 
-        List<List<String>> sortedUnits = sortByUnitCode(units);
-
-        for(List<String> l : sortedUnits) {
+        for(List<String> l : sortByUnitCode(units)) {
             taskLog(l.get(0) + " — " + l.get(1));
         }
 
@@ -95,9 +93,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printUnitsWithDifferentName(Set<List<String>> units) {
         taskLog("Units with different name: " + units.size());
 
-        List<List<String>> sortedUnits = sortByUnitCode(units);
-
-        for(List<String> l : sortedUnits) {
+        for(List<String> l : sortByUnitCode(units)) {
             taskLog(l.get(0) + " — old name: " + l.get(1) + "; new name: " + l.get(2));
         }
 
@@ -111,10 +107,8 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printDegreesNotInSystem(Set<List<String>> degrees) {
         taskLog("Degrees not in the system: " + degrees.size());
 
-        List<List<String>> sortedDegrees = degrees.stream().sorted(Comparator.comparing(l -> l.get(3))).sorted(Comparator.comparing(l -> l.get(1))).collect(Collectors.toList());
-
-        for(List<String> d : sortedDegrees) {
-            taskLog(d.get(0) + " — " + d.get(1) + " : " + d.get(2) + " — " + d.get(3) + " : " + d.get(4));
+        for(List<String> l : sortByUnitAndDegreesCodes(degrees)) {
+            taskLog(l.get(1) + " : " + l.get(2) + " — " + l.get(0) + " — " + l.get(3) + " : " + l.get(4));
         }
 
         taskLog();
@@ -123,17 +117,16 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     private void printDegreesWithDifferentDescription(Set<List<String>> degrees) {
         taskLog("Degrees with different description: " + degrees.size());
 
-        List<List<String>> sortedDegrees = degrees.stream().sorted(Comparator.comparing(l -> l.get(0))).collect(Collectors.toList());
-
-        for(List<String> l : sortedDegrees) {
-            taskLog(l.get(0) + " — old name: " + l.get(1) + "; new name: " + l.get(2));
+        for(List<String> l : sortByUnitAndDegreesCodes(degrees)) {
+            taskLog(l.get(1) + " : " + l.get(2) + " — " + l.get(0) + " — "  + l.get(3) + " : old name: " + l.get(4) + "; new name: " + l.get(5));
         }
 
         taskLog();
     }
 
     private List<List<String>> sortByUnitAndDegreesCodes(Set<List<String>> set) {
-        return set.stream().sorted((l1, l2) -> l1.get(1).compareTo(l2.get(1))).collect(Collectors.toList());
+        Comparator<List<String>> degreeComparator = Comparator.comparing((List<String> l) -> l.get(1)).thenComparing(l -> l.get(3));
+        return set.stream().sorted(degreeComparator).collect(Collectors.toList());
     }
 
     private BufferedReader getReaderFromURL(URL url) throws IOException {

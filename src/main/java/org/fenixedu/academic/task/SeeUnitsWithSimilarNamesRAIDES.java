@@ -42,7 +42,7 @@ public class SeeUnitsWithSimilarNamesRAIDES extends CustomTask {
             }
             else {
                 String name = l.get(1);
-                List<String> splitted = Arrays.asList(name.split(" ")).stream().map(s -> StringNormalizer.normalizeAndRemoveAccents(s.replaceAll("[^a-zA-Z]", "")).toLowerCase()).filter(s -> s.length() > 3).collect(Collectors.toList());
+                List<String> splitted = Arrays.asList(name.split(" ")).stream().map(s -> StringNormalizer.normalizeAndRemoveAccents(s).replaceAll("[^a-zA-Z]", "").toLowerCase()).filter(s -> s.length() > 3).collect(Collectors.toList());
 
                 allUnits.stream().filter(u -> u.getCode() == null && splitted.stream().allMatch(StringNormalizer.normalizeAndRemoveAccents(u.getName()).toLowerCase()::contains) && u.getUnitName() != null)
                         .forEach(u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " -- externa: "

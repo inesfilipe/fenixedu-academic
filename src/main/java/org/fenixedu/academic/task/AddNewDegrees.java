@@ -149,7 +149,7 @@ public class AddNewDegrees extends CustomTask {
         case "Aguarda reconhecimento como licenciatura":
             return DegreeClassification.readByCode("X");
         case "Curso técnico superior profissional":
-            return DegreeClassification.readByCode("T"); //this code doesn't exist!!!
+            return DegreeClassification.readByCode("T"); //this code doesn't exist! remember to run the script to add it
         default:
             return null;
         }

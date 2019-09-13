@@ -71,7 +71,7 @@ public class CheckMissingUnitsAndDegrees extends CustomTask {
     }
 
     private List<Unit> getUnitsWithCode() {
-        return Unit.readAllUnits().stream().filter(u -> u.getCode() != null && !u.getCode().isEmpty()).collect(
+        return Unit.readAllUnits().stream().filter(u -> u.getCode() != null && !u.getCode().isEmpty() && u.getUnitName() != null && u.getUnitName().getIsExternalUnit()).collect(
                 Collectors.toList());
     }
 

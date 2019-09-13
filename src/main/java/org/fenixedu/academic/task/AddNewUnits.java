@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class AddNewUnits extends CustomTask {
 
+    private String LOG_SIMILAR = "Found similar - OID: ";
+
     @Override
     public void runTask() throws Exception {
         List<Unit> allUnits = Unit.readAllUnits();
@@ -43,60 +45,32 @@ public class AddNewUnits extends CustomTask {
             taskLog(unit.get(0) + " — " + unit.get(1));
 
             if (allUnits.stream().anyMatch(u -> isExternalUnitWithSameNameAndNoCode(u, unit.get(1)))) {
-//                allUnits.stream().filter(u -> isExternalUnitWithSameNameAndNoCode(u, unit.get(1))).findFirst().ifPresent(
-//                        u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " autocomplete: " + u.getUnitName().getName() + " -- externa: " + u.getUnitName().getIsExternalUnit().toString()
-//                                + " no degree: " + u.getDegreeDesignationSet().size()));
-
                 allUnits.stream()
                         .filter(u -> isExternalUnitWithSameNameAndNoCode(u, unit.get(1)))
                         .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); taskLog("Found equal - OID: " + u.getOid()); });
-
-            } else if (allUnits.stream().anyMatch(u -> isExternalUnitWithSimilarNameAndNoCode(u, splitAndNormalizeName(unit.get(1))))) {
-//                allUnits.stream().filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, splitAndNormalizeName(unit.get(1))) && !StringNormalizer.normalize(u.getName()).contains("tecnica") && !StringNormalizer
-//                        .normalize(u.getName()).contains("lusiada")).findFirst().ifPresent(u -> taskLog(
-//                        u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " autocomplete: " + u.getUnitName().getName() + " -- externa: " + u.getUnitName().getIsExternalUnit().toString()
-//                                + " no degree: " + u.getDegreeDesignationSet().size() + " " + new LocalizedString(Locale.getDefault(), unit.get(1))));
-
+            }
+            else if (allUnits.stream().anyMatch(u -> isExternalUnitWithSimilarNameAndNoCode(u, splitAndNormalizeName(unit.get(1))))) {
                 allUnits.stream()
                         .filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, splitAndNormalizeName(unit.get(1))) && !StringNormalizer.normalize(u.getName()).contains("tecnica") && !StringNormalizer.normalize(u.getName()).contains("lusiada"))
-                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog("Found similar - OID: " + u.getOid()); });
-
-            } else if (unit.get(0).equals("1519")) {
-//                allUnits.stream().filter(u ->
-//                        isExternalUnitWithSimilarNameAndNoCode(u, Arrays.asList("instituto", "superior", "tecnico", "taguspark"))
-//                                && !StringNormalizer.normalize(u.getName()).contains("tecnica") && !StringNormalizer.normalize(u.getName()).contains("lusiada")).findFirst().ifPresent(u -> taskLog(
-//                        u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " autocomplete: " + u.getUnitName().getName() + " -- externa: " + u.getUnitName().getIsExternalUnit().toString()
-//                                + " no degree: " + u.getDegreeDesignationSet().size() + " " + new LocalizedString(Locale.getDefault(), unit.get(1))));
-
+                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog(LOG_SIMILAR + u.getOid()); });
+            }
+            else if (unit.get(0).equals("1519")) {
                 allUnits.stream()
                         .filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, Arrays.asList("instituto", "superior", "tecnico", "taguspark")) && !StringNormalizer.normalize(u.getName()).contains("tecnica") && !StringNormalizer.normalize(u.getName()).contains("lusiada"))
-                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog("Found similar - OID: " + u.getOid()); });
-
-            } else if (unit.get(0).equals("2403")) {
-//                allUnits.stream()
-//                        .filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, Arrays.asList("universidade", "lusiada", "porto"))
-//                                && !StringNormalizer.normalize(u.getName()).contains("instituto")).findFirst().ifPresent(
-//                        u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " autocomplete: " + u.getUnitName().getName() + " -- externa: " + u.getUnitName().getIsExternalUnit().toString()
-//                                + " no degree: " + u.getDegreeDesignationSet().size() + " " + new LocalizedString(Locale.getDefault(), unit.get(1))));
-
+                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog(LOG_SIMILAR + u.getOid()); });
+            }
+            else if (unit.get(0).equals("2403")) {
                 allUnits.stream()
                         .filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, Arrays.asList("universidade", "lusiada", "porto")) && !StringNormalizer.normalize(u.getName()).contains("instituto"))
-                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog("Found similar - OID: " + u.getOid()); });
+                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog(LOG_SIMILAR + u.getOid()); });
 
-            } else if (unit.get(0).equals("2404")) {
-//                allUnits.stream().filter(u -> isExternalUnitWithSimilarNameAndNoCode(u,
-//                        Arrays.asList("universidade", "lusiada", "vila", "nova", "famalicao"))).findFirst().ifPresent(
-//                        u -> taskLog(u.getOid().toString() + " " + u.getCode() + " " + u.getName() + " autocomplete: " + u.getUnitName().getName() + " -- externa: " + u.getUnitName().getIsExternalUnit().toString()
-//                                + " no degree: " + u.getDegreeDesignationSet().size() + " " + new LocalizedString(Locale.getDefault(), unit.get(1))));
-
+            }
+            else if (unit.get(0).equals("2404")) {
                 allUnits.stream()
                         .filter(u -> isExternalUnitWithSimilarNameAndNoCode(u, Arrays.asList("universidade", "lusiada", "vila", "nova", "famalicao")))
-                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog("Found similar - OID: " + u.getOid()); });
-
-            } else {
-//                taskLog(" " + unit.get(0) + " " + unit.get(1) + " autocomplete: " + StringNormalizer.normalize(unit.get(1)) + " -- externa: " + Boolean.TRUE.toString()
-//                        + " no degree: 0 + type: " + getTypeFromName(unit.get(1)));
-
+                        .findFirst().ifPresent(u -> { u.setCode(unit.get(0)); changeName(u, unit.get(1)); taskLog(LOG_SIMILAR + u.getOid()); });
+            }
+            else {
                 UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), unit.get(1)),
                         FenixFramework.getDomainObject(CountryUnit.getDefault().getExternalId()),
                         Boolean.TRUE, unit.get(0), getTypeFromName(unit.get(1)));
@@ -140,7 +114,7 @@ public class AddNewUnits extends CustomTask {
     }
 
     private List<String> splitAndNormalizeName(String name) {
-        return Arrays.asList(name.split(" ")).stream()
+        return Arrays.stream(name.split(" "))
                 .map(s -> StringNormalizer.normalize(s).replaceAll("[^a-zA-Z]", ""))
                 .filter(s -> s.length() > 3).collect(Collectors.toList());
     }

@@ -7,7 +7,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class RemoveDuplicatedCodeFromTecnicoUnit extends CustomTask {
 
     @Override
-    public void runTask() throws Exception {
+    public void runTask() {
         Unit unit = FenixFramework.getDomainObject("2160369218947");
         unit.setCode(null);
     }

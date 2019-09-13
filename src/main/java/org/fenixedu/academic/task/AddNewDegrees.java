@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,6 @@ public class AddNewDegrees extends CustomTask {
     @Override
     public void runTask() throws Exception {
         List<DegreeDesignation> degreeDesignations;
-        List<String> tecnicoCodes = Arrays.asList("0807", "0808", "1518", "1519");
 
         URL csvURL = new URL("https://gist.githubusercontent.com/inesfilipe/d873eb941c6cbaf61f18212a6e819f2f/raw/59c1d2af2e5d71e7aef97b85c3b9afe3603b948a/tbl_Grau_Estabelecimento_Curso.csv");
         BufferedReader br = getReaderFromURL(csvURL);
@@ -34,13 +32,11 @@ public class AddNewDegrees extends CustomTask {
             final List<String> data = parseLine(line);
 
             degreeDesignations = getDegreeDesignationsWithCode();
-            if(!tecnicoCodes.contains(data.get(1))) {
-                if(degreeDesignations.stream().noneMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)))) {
-                    addDegreeToSystem(data);
-                }
-                else if(degreeDesignations.stream().anyMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)) && !data.get(4).equals(d.getDescription()))) {
-                    updateDegreeName(data);
-                }
+            if(degreeDesignations.stream().noneMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)))) {
+                addDegreeToSystem(data);
+            }
+            else if(degreeDesignations.stream().anyMatch(d -> isDegreeWithSameCodeAndUnit(d, data.get(3), data.get(1)) && !data.get(4).equals(d.getDescription()))) {
+                updateDegreeName(data);
             }
         }
 

@@ -544,7 +544,7 @@ public class PersonalInformationBean implements Serializable {
             result.add("error.personalInformation.year.after.current");
         }
 
-        int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
+        int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay() != null ? getStudent().getPerson().getDateOfBirthYearMonthDay().getYear() : Integer.MIN_VALUE;
         if (getConclusionYear() != null && getConclusionYear() < birthYear) {
             result.add("error.personalInformation.year.before.birthday");
         }

@@ -337,7 +337,7 @@ ${portal.toolkit()}
                         </div>
                         <label for="installment" class="control-label col-sm-1"><spring:message code="accounting.event.custom.payment.plan.installment" text="Installment"/></label>
                         <div class="col-sm-2">
-                            <input type="text" id="installment" name="installment" pattern="^€\d{1,3}(\.\d{3})*(,\d+)?$" value="" data-type="currency" placeholder="€1.234,56">
+                            <input type="text" id="installment" name="installment" pattern="^€\d{1,3}(\.\d{3})*(,\d+)?$" value="" data-type="currency" placeholder="<spring:message code="accounting.event.custom.payment.plan.creation.placeholder" text="e.g."/> €1.234,56">
                             <span id="errorInstallment" class="error"></span>
                         </div>
                         <div class="col-sm-offset-8">

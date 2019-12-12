@@ -1229,6 +1229,7 @@ public abstract class Event extends Event_Base {
         return Event.canBeRefunded.test(this);
     }
 
+    @Atomic
     public void createCustomPaymentPlan(final DateTime exemptionDate, final Map<LocalDate, Money> map) {
         final DateTime when = new DateTime().minusSeconds(2);
         final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
@@ -1257,6 +1258,7 @@ public abstract class Event extends Event_Base {
         setDueDateAmountMap(new DueDateAmountMap(map));
     }
 
+    @Atomic
     public void deleteCustomPaymentPlan(final Money value) {
         final SortedMap<LocalDate, Money> map = new TreeMap<>(Collections.reverseOrder());
         map.putAll(getDueDateAmountMap());
